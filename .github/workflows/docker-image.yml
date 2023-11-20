@@ -20,3 +20,5 @@ jobs:
     - name: Build the Docker Image
       run: |
             docker buildx build -t better-calendar-react .
+            docker run ghcr.io/szade-organization/better-calendar-react:latest
+            docker push ghcr.io/szade-organization/better-calendar-react:latest
