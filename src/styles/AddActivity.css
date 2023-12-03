@@ -1,34 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Chivo:wght@400;700&display=swap');
 
-.add-activity {
+
+
+.add-activity {  
     width: 90%;
     max-width: 960px;
     border-radius: 20px;
     border: 3px solid #4E758A;
+    overflow:hidden;  
 }
 
 .add-activity .header {
     background-color: #4E758A;
-    height: 60px;
-    margin-top: -3px;
-    margin-left: -1.5px;
-    border: 3px solid #4E758A;
+    height: 60px;   
     border-bottom: none;
-    border-radius: 20px 20px 0 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between;   
+  
+  
 }
 
 .add-activity h1 {
     font-family: 'Chivo';
     font-size: 3rem;
-    font-weight: 400;
-    line-height: 60px;
+    font-weight: 400; 
     text-align: left;
     color: white;
-    margin-left: 20px;
+    margin-left: 20px; 
+   
+    
 
 }
 
