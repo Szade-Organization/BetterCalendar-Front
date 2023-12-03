@@ -12,19 +12,6 @@ function AddActivity() {
         description: ''
     });
 
-    useEffect(() => {
-        const currentDate = new Date();
-        const currentDayOfWeek = currentDate.getDay();
-        const currentHour = currentDate.getHours();
-
-        const currentTimeString = `${currentDayOfWeek} ${currentHour}:00`;
-
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            time: currentTimeString
-        }));
-    }, []);
-
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -47,7 +34,7 @@ function AddActivity() {
         <div className="add-activity">
             <div className="header">
                 <h1>New activity</h1>
-                <button className="close-button">X</button>
+                <button className="close-button">x</button>
             </div>
 
             <form onSubmit={handleSubmit}>
