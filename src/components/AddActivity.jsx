@@ -78,7 +78,7 @@ function AddActivity() {
                     <input type="checkbox" className="checkbox" checked={formData.reoccuring} onChange={handleCheckboxChange} />
                 </div>
 
-                <div className="row-container">
+                <div className="column-container">
                     <label>
                         Description:
                     </label>                  
