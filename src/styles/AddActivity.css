@@ -136,8 +136,7 @@
         align-items: center;
         justify-content: center;
         gap: 0.8rem;
-        margin: 0.5rem;
-        text-align: left;
+        margin: 0.5rem;       
     }
 
     .add-activity .column-container {
