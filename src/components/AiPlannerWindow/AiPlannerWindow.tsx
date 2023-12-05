@@ -2,7 +2,7 @@ import { memo } from 'react';
 import type { FC } from 'react';
 
 import resets from '../_resets.module.css';
-import classes from './AiPlannerWindow.module.css';
+import classes from '../../styles/AiPlannerWindow.module.css';
 import { ChooseDayButton } from './ChooseDayButton/ChooseDayButton.js';
 import { ChooseWeekButton } from './ChooseWeekButton/ChooseWeekButton.js';
 import { DropdownBox2 } from './DropdownBox2/DropdownBox2.js';
