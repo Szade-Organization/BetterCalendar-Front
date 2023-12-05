@@ -1,0 +1,56 @@
+
+/*.root {
+  width: 200px;
+  height: min-content;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  outline: solid 1px #a6a6a6;
+  outline-offset: -1px;
+  border-radius: 4px;
+  background-color: #fff;
+}*/
+/* yourStyles.css */
+
+/* Add any reset styles if needed */
+.clapyResets {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Styles for the root container */
+.root {
+  position: relative;
+}
+
+/* Styles for the dropdown */
+.dropdown {
+  width: 200px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+  outline: none;
+  appearance: none; /* Remove default arrow on Chrome/Safari */
+}
+
+/* Optional: Styles for the dropdown options */
+.dropdown option {
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  /* Add any styles for the dropdown options */
+}
+
+/* Optional: Styles for the dropdown arrow icon (if needed) */
+.dropdown::after {
+  content: '▼';
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
