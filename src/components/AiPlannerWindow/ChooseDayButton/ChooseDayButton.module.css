@@ -1,0 +1,34 @@
+.root {
+  position: relative;
+  width: 284px;
+  height: 87px;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+}
+.rectangle1 {
+  flex: 1;
+  align-self: stretch;
+  outline: solid 1px #a6a6a6;
+  outline-offset: -1px;
+  border-radius: 20px;
+  background-color: #4e758a;
+}
+.planMyDay {
+  color: #fff;
+  font-size: 32px;
+  font-weight: bold;
+  font-family: Chivo, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    'Liberation Sans', sans-serif;
+  position: absolute;
+  left: 50%;
+  top: calc(50% - 0.5px);
+  width: 221px;
+  height: 61px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transform: translate(-50%, -50%);
+}

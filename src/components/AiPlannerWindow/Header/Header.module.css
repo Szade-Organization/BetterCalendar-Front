@@ -1,0 +1,40 @@
+.root {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 960px;
+  height: 60px;
+  flex-direction: column;
+  align-items: flex-start;
+  outline: solid 1px #4e758a;
+  outline-offset: -1px;
+  background-color: #4e758a;
+  overflow: hidden;
+}
+.turboAIPlannerGPT {
+  color: #fff;
+  font-size: 48px;
+  font-weight: bold;
+  font-family: Chivo, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+    'Liberation Sans', sans-serif;
+  position: absolute;
+  left: 20px;
+  top: 0;
+  width: 780px;
+  height: 60px;
+  justify-content: center;
+  flex-direction: column;
+}
+.close {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 60px;
+  height: 60px;
+  overflow: visible;
+  transform: translateY(-50%);
+}
+.icon {
+  width: 100%;
+  height: 100%;
+}
