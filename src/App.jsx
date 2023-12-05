@@ -11,8 +11,8 @@ function App() {
 
   return (
     <>
-      <AiPlannerWindow/>
-      {/*<AddActivity />*/}
+      {/*<AiPlannerWindow/>*/}
+      <AddActivity />
     </>
   );
 }
