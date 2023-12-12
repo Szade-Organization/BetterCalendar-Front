@@ -3,8 +3,6 @@ name: Docker Image CI
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
 
 jobs:
   publish-docker-image:
@@ -19,5 +17,5 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build the Docker Image
       run: |
-            docker buildx build -t ghcr.io/szade-organization/better-calendar-react:latest .
-            docker push ghcr.io/szade-organization/better-calendar-react:latest
+            docker buildx build -t ghcr.io/szade-organization/bettercalendar-front:latest .
+            docker push ghcr.io/szade-organization/bettercalendar-front:latest
