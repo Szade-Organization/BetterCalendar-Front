@@ -1,10 +1,27 @@
 import { useFormik } from 'formik';
+import React, { useState } from 'react';
 import * as Yup from 'yup';
-import '../styles/AddActivity.css';
-import '../styles/Buttons.css';
+import Button from '../Buttons/Button';
+import Checkbox from '../Inputs/Checkbox';
+import Input from '../Inputs/Input';
+import Select from '../Inputs/Select';
+import TextArea from '../Inputs/TextArea';
 
-function AddActivity() {
-    const formik = useFormik({
+
+interface ActivityFormValues {
+    name: string;
+    category: string;
+    time: string;
+    location: string;
+    reoccuring: boolean;
+    description: string;
+}
+
+interface ActivityFormProps {
+    onClose: () => void;
+}
+const ActivityForm: React.FC<ActivityFormProps> = ({ onClose }) => {
+    const formik = useFormik<ActivityFormValues>({
         initialValues: {
             name: '',
             category: '',
@@ -19,26 +36,24 @@ function AddActivity() {
             time: Yup.string().required('Required'),
             location: Yup.string(),
             description: Yup.string()
-           
+
         }),
         onSubmit: () => {
-            
+            onClose();
         },
     });
 
+
     return (
-        <div className="add-activity">
-            <div className="header">
-                <h1>New activity</h1>
-                <button className="close-button">x</button>
+
+        <div className="p-4">
+            <div className="mb-4">
+                <h1 className="text-3xl font-semibold">New activity</h1>
             </div>
-
-            <form onSubmit={formik.handleSubmit}>
-
-            
-                <div className="row-container">
+            <form onSubmit={formik.handleSubmit} method="post">
+                <div className="flex items-center flex-row space-x-4 mb-4 ">
                     <label>Name:</label>
-                    <input
+                    <Input
                         type="text"
                         name="name"
                         onChange={formik.handleChange}
@@ -46,14 +61,13 @@ function AddActivity() {
                         value={formik.values.name}
                     />
                     {formik.touched.name && formik.errors.name ? (
-                        <div>{formik.errors.name}</div>
+                        <div className="text-red-500 text-s">{formik.errors.name}</div>
                     ) : null}
                 </div>
 
-            
-                <div className="row-container">
+                <div className="flex items-center flex-row space-x-4 mb-4 ">
                     <label>Category:</label>
-                    <select
+                    <Select
                         name="category"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -62,58 +76,50 @@ function AddActivity() {
                         <option value="option1">Option 1</option>
                         <option value="option2">Option 2</option>
                         <option value="option3">Option 3</option>
-                    </select>
-                    {formik.touched.category && formik.errors.category ? (
-                        <div>{formik.errors.category}</div>
+                    </Select>
+                    {formik.touched.name && formik.errors.name ? (
+                        <div className="text-red-500 text-s">{formik.errors.name}</div>
                     ) : null}
                 </div>
 
-             
-                <div className="row-container">
+                <div className="flex items-center flex-row space-x-4 mb-4 ">
                     <label>Time:</label>
-                    <input
+                    <Input
                         type="text"
                         name="time"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.time}
                     />
-                    {formik.touched.time && formik.errors.time ? (
-                        <div>{formik.errors.time}</div>
+                    {formik.touched.name && formik.errors.name ? (
+                        <div className="text-red-500 text-s">{formik.errors.name}</div>
                     ) : null}
                 </div>
 
-             
-                <div className="row-container">
+                <div className="flex items-center flex-row space-x-4 mb-4 ">
                     <label>Location:</label>
-                    <input
-                        type="text"
-                        name="location"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.location}
-                    />
+                    <Button onClick={onClose} className="bg-blue-500 hover:bg-gray-700" >Choose</Button>
                     {formik.touched.location && formik.errors.location ? (
                         <div>{formik.errors.location}</div>
                     ) : null}
                 </div>
 
-           
-                <div className="row-container">
+
+                <div className="flex items-center flex-row space-x-4 mb-4 ">
                     <label>Reoccurring:</label>
-                    <input
-                        type="checkbox"
+                    <Checkbox
                         name="reoccuring"
+                        checked={formik.values.reoccuring}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        checked={formik.values.reoccuring}
                     />
                 </div>
 
-           
-                <div className="column-container">
+
+                <div className="flex items-start flex-col space-y-2 mb-4 ">
                     <label>Description:</label>
-                    <textarea
+                    <TextArea
+                        className='w-1/2'
                         name="description"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -121,10 +127,16 @@ function AddActivity() {
                     />
                 </div>
 
-                <button className="button-common form-button submit-button" type="submit">Submit</button>
+                <div className="flex justify-end space-x-3">
+                    <Button onClick={onClose} className="bg-gray-500 hover:bg-gray-700" >Cancel</Button>
+                    <Button type="submit" className="bg-green-500 hover:bg-green-700" >Submit</Button>
+                </div>
             </form>
+
+
         </div>
+
     );
 }
 
-export default AddActivity;
+export default ActivityForm;
