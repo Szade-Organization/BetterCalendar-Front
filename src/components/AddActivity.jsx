@@ -1,34 +1,30 @@
-import { useState, useEffect } from "react";
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import '../styles/AddActivity.css';
 import '../styles/Buttons.css';
 
 function AddActivity() {
-    const [formData, setFormData] = useState({
-        name: '',
-        category: '',
-        time: '',
-        location: '',
-        reoccuring: false,
-        description: ''
+    const formik = useFormik({
+        initialValues: {
+            name: '',
+            category: '',
+            time: '',
+            location: '',
+            reoccuring: false,
+            description: ''
+        },
+        validationSchema: Yup.object({
+            name: Yup.string().required('Required'),
+            category: Yup.string().required('Required'),
+            time: Yup.string().required('Required'),
+            location: Yup.string(),
+            description: Yup.string()
+           
+        }),
+        onSubmit: () => {
+            
+        },
     });
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
-    };
-
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-       
-    };
-
-    const handleCheckboxChange = (e) => {
-        setFormData({ ...formData, reoccuring: !formData.reoccuring });
-    }
 
     return (
         <div className="add-activity">
@@ -37,52 +33,92 @@ function AddActivity() {
                 <button className="close-button">x</button>
             </div>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={formik.handleSubmit}>
 
+            
                 <div className="row-container">
-                    <label>
-                        Name:
-                    </label>
-                    <input type="text" name="name" value={formData.name} onChange={handleInputChange} />
+                    <label>Name:</label>
+                    <input
+                        type="text"
+                        name="name"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.name}
+                    />
+                    {formik.touched.name && formik.errors.name ? (
+                        <div>{formik.errors.name}</div>
+                    ) : null}
                 </div>
 
+            
                 <div className="row-container">
-                    <label>
-                        Category:
-                    </label>
-                    <select name="category" value={formData.category} onChange={handleInputChange}>
+                    <label>Category:</label>
+                    <select
+                        name="category"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.category}
+                    >
                         <option value="option1">Option 1</option>
                         <option value="option2">Option 2</option>
                         <option value="option3">Option 3</option>
                     </select>
+                    {formik.touched.category && formik.errors.category ? (
+                        <div>{formik.errors.category}</div>
+                    ) : null}
                 </div>
 
+             
                 <div className="row-container">
-                    <label>
-                        Time:
-                    </label>
-                    <button className="button-common form-button">Choose time</button>
+                    <label>Time:</label>
+                    <input
+                        type="text"
+                        name="time"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.time}
+                    />
+                    {formik.touched.time && formik.errors.time ? (
+                        <div>{formik.errors.time}</div>
+                    ) : null}
                 </div>
 
+             
                 <div className="row-container">
-                    <label>
-                        Location:
-                    </label>
-                    <button className="button-common form-button">Choose location</button>
+                    <label>Location:</label>
+                    <input
+                        type="text"
+                        name="location"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.location}
+                    />
+                    {formik.touched.location && formik.errors.location ? (
+                        <div>{formik.errors.location}</div>
+                    ) : null}
                 </div>
 
+           
                 <div className="row-container">
-                    <label>
-                        Reoccuring:
-                    </label>
-                    <input type="checkbox" className="checkbox" checked={formData.reoccuring} onChange={handleCheckboxChange} />
+                    <label>Reoccurring:</label>
+                    <input
+                        type="checkbox"
+                        name="reoccuring"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        checked={formik.values.reoccuring}
+                    />
                 </div>
 
+           
                 <div className="column-container">
-                    <label>
-                        Description:
-                    </label>                  
-                    <textarea className="description" name="description" value={formData.description} onChange={handleInputChange} />
+                    <label>Description:</label>
+                    <textarea
+                        name="description"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.description}
+                    />
                 </div>
 
                 <button className="button-common form-button submit-button" type="submit">Submit</button>
