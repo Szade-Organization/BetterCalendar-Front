@@ -8,12 +8,12 @@ const Navbar = () => {
     <div className="navbar-container">
       <div className="nav-links">
         <div className="logo-text">BetterCalendar</div>
-        <NavLink to="/" className="nav-link">
+        {/* <NavLink to="/" className="nav-link">
           Add Activity
         </NavLink>
         <NavLink to="ai" className="nav-link">
           AI Planner
-        </NavLink>
+        </NavLink> */}
         {/* <a href="#" className="nav-link">
           Link 3
         </a>
