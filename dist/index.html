@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="style.css" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial';
+      -webkit-font-smoothing: antialiased;
+      -moz-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizelegibility;
+    }
+
+    ul {
+      display: flex;
+      flex-direction: row;
+      min-height: 100vh;
+      max-height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      list-style-type: none;
+    }
+
+    .flex-item {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: auto;
+        cursor: pointer;
+        transition: flex 0.8s ease;
+      }
+      
+      .flex-item:hover {
+        background: darken(currentColor, 5);
+      }
+      
+      .flex-item.active {
+        flex: 12;
+        cursor: default;
+      }
+      
+      .flex-item.active h2 {
+        color: black;
+      }
+      
+      .flex-item.active .section-content {
+        flex: 12;
+        opacity: 1;
+        transform: scaleX(1);
+        color: black;
+      }
+      
+      .flex-1 {
+        background: #CFF4D2;
+      }
+      
+      .flex-2 {
+        background: #7BE495;
+      }
+      
+      .flex-3 {
+        background: #56C596;
+      }
+      
+      .flex-4 {
+        background: #329D9C;
+      }
+      
+      .flex-5 {
+        background: #3C6C8E;
+      }
+
+      .section-title {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 5px;
+        padding: 0;
+        text-align: center;
+        color: black;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 40px;
+        max-width: 30px; 
+      }
+      
+      .section-title h2 {
+        margin: auto;
+        transform: rotate(-90deg);
+        white-space: nowrap;
+      }
+      
+      .section-content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        opacity: 0;
+        transition: all .25s .1s ease-out;
+      }
+  </style>
+  <title>Tailwind Accordion</title>
+</head>
+<body class="font-lato antialiased">
+
+<ul class="flex min-h-screen max-h-screen overflow-hidden list-none">
+  <li class="flex-item flex-1" onclick="toggleAccordion(this)">
+    <div class="section-title">
+      <h2>Your week</h2>
+    </div>
+    <div class="section-content">
+      <p>Your week dashboard here</p>
+    </div>
+  </li>
+  <li class="flex-item flex-2" onclick="toggleAccordion(this)">
+    <div class="section-title">
+      <h2>Activities</h2>
+    </div>
+    <div class="section-content">
+      <p>Calendar here</p>
+    </div>
+  </li>
+  <li class="flex-item flex-3" onclick="toggleAccordion(this)">
+    <div class="section-title">
+      <h2>Statistics</h2>
+    </div>
+    <div class="section-content">
+      <p>Statistics contents here</p>
+    </div>
+  </li>
+  <li class="flex-item flex-4" onclick="toggleAccordion(this)">
+    <div class="section-title">
+      <h2>AI Planner</h2>
+    </div>
+    <div class="section-content">
+      <p>Ai planner contents here</p>
+    </div>
+  </li>
+  <li class="flex-item flex-5" onclick="toggleAccordion(this)">
+    <div class="section-title">
+      <h2>Settings</h2>
+    </div>
+    <div class="section-content">
+      <p>Settings contents here</p>
+    </div>
+  </li>
+
+</ul>
+
+<script>
+  function toggleAccordion(element) {
+    // Remove 'active' class from all list items
+    for (let i = 1; i <= 5; i++) {
+        document.querySelectorAll(`.flex-${i}`).forEach(item => item.classList.remove('active'));
+      }
+
+    // Add 'active' class to the clicked list item
+    element.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
