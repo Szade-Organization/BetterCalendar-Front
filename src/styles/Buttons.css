@@ -1,8 +1,0 @@
-.button-common{
-    cursor: pointer;
-
-}
-
-.button-common:hover{
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
