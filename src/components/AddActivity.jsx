@@ -26,7 +26,7 @@ const AddActivity = () => {
             <SearchForm onSubmit={() => { }} />
             <Button className="bg-green-500 hover:bg-green-700" onClick={notify}>Notify!</Button>
             <ToastContainer />
-            <p> add activity to bedzie sam modal</p>
+            <br/>
             <Modal
                 buttonText="Add Activity"
                 content={(closeModal) => <ActivityForm onClose={closeModal} />}

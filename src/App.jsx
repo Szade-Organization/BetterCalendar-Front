@@ -11,10 +11,10 @@ import AddActivity from "./components/AddActivity.jsx";
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      // <Route path="/" element={<Layout />}>
+      //<Route path="/" element={<Layout />}/>
          <Route index element={<AddActivity />} />
        
-      // </Route>
+  
     )
   );
   return <RouterProvider router={router} />;

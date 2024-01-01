@@ -106,7 +106,7 @@ const ActivityForm = ({ onClose }) => {
                 <div className="flex items-start flex-col space-y-2 mb-4 ">
                     <label>Description:</label>
                     <TextArea
-                        className='w-1/2'
+                        className='w-full sm:w-1/2'
                         name="description"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
