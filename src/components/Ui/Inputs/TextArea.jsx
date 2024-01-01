@@ -1,8 +1,6 @@
 import React from 'react';
 
-interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
-
-const TextArea: React.FC<TextAreaProps> = ({ ...props }) => {
+const TextArea = (props) => {
     return (
         <textarea
             {...props}

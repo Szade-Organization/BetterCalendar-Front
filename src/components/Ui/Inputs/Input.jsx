@@ -1,8 +1,6 @@
 import React from 'react';
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
-
-const Input: React.FC<InputProps> = ({ ...props }) => {
+const Input = (props) => {
     return (
         <input
             {...props}

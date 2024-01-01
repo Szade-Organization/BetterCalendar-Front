@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import React, { useState } from 'react';
+import React from 'react';
 import * as Yup from 'yup';
 import Button from '../Buttons/Button';
 import Checkbox from '../Inputs/Checkbox';
@@ -7,21 +7,8 @@ import Input from '../Inputs/Input';
 import Select from '../Inputs/Select';
 import TextArea from '../Inputs/TextArea';
 
-
-interface ActivityFormValues {
-    name: string;
-    category: string;
-    time: string;
-    location: string;
-    reoccuring: boolean;
-    description: string;
-}
-
-interface ActivityFormProps {
-    onClose: () => void;
-}
-const ActivityForm: React.FC<ActivityFormProps> = ({ onClose }) => {
-    const formik = useFormik<ActivityFormValues>({
+const ActivityForm = ({ onClose }) => {
+    const formik = useFormik({
         initialValues: {
             name: '',
             category: '',
@@ -36,12 +23,12 @@ const ActivityForm: React.FC<ActivityFormProps> = ({ onClose }) => {
             time: Yup.string().required('Required'),
             location: Yup.string(),
             description: Yup.string()
-
         }),
         onSubmit: () => {
             onClose();
         },
     });
+
 
 
     return (

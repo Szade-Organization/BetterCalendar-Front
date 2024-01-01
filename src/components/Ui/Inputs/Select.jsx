@@ -1,10 +1,6 @@
 import React from 'react';
 
-interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
-    options?: { value: string; label: string }[];
-}
-
-const Select: React.FC<SelectProps> = ({ options, ...props }) => {
+const Select = ({ options, ...props }) => {
     return (
         <select
             {...props}

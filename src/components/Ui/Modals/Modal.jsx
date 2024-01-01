@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 
-interface ModalProps {
-    buttonText: string;
-    content: (closeModal: () => void) => React.ReactNode;
-
-}
-
-const Modal: React.FC<ModalProps> = ({ buttonText, content }) => {
+const Modal = ({ buttonText, content }) => {
     const [showModal, setShowModal] = useState(false);
 
     const closeModal = () => setShowModal(false);
@@ -37,4 +31,3 @@ const Modal: React.FC<ModalProps> = ({ buttonText, content }) => {
 };
 
 export default Modal;
-

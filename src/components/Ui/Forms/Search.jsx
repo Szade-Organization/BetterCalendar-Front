@@ -1,13 +1,9 @@
 import React from 'react';
 
-interface SearchFormProps {
-    onSubmit: (searchTerm: string) => void;
-}
-
-const SearchForm: React.FC<SearchFormProps> = ({ onSubmit }) => {
+const SearchForm = ({ onSubmit }) => {
     const [searchTerm, setSearchTerm] = React.useState('');
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
         onSubmit(searchTerm);
     };
