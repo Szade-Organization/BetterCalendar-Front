@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Toast from './Ui/Notifications/Toastb';
 import Toastb from './Ui/Notifications/Toastb';
-import Notification, { NotificationType } from './Ui/Modals/Notification';
+import Notification, { NotificationType } from './Ui/Notifications/Notification';
 
 const AddActivity = () => {
 
