@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import "../../styles/Layout.css";
+import AddActivity from "../AddActivity";
 
 const Layout = () => {
   const [activeSection, setActiveSection] = useState(null);
@@ -12,7 +13,7 @@ const Layout = () => {
   const sections = [
     {
       title: "Your week",
-      content: "Your week dashboard here",
+      content: <AddActivity />,
       color: "#CFF4D2",
     },
     { title: "Activities", content: "Calendar here", color: "#7BE495" },
@@ -35,9 +36,8 @@ const Layout = () => {
         {sections.map((section, index) => (
           <li
             key={index}
-            className={`flex-item flex-${index + 1} ${
-              activeSection === index ? "active" : ""
-            }`}
+            className={`flex-item flex-${index + 1} ${activeSection === index ? "active" : ""
+              }`}
             style={{ background: section.color }}
             onClick={() => toggleAccordion(index)}
           >
