@@ -64,6 +64,248 @@
       .flex-5 {
         background: #3C6C8E;
       }
+
+      .drager {
+        background: #708090;
+      }
+
+      .stat {
+        background: #e8e5dd;
+      }
+
+   
+      
+      
+      .outer {
+        position:sticky;
+      }
+      
+      .calendar {
+          margin: 0 auto;
+        max-width: 960px;
+        min-width: 960px;
+      
+        border-radius: 8px;
+      }
+      .wrap {
+      
+        overflow-x: hidden;
+        overflow-y: scroll;
+          max-width: 960px;
+        height: 760px;
+        border-radius: 8px;
+      }
+      
+      
+      thead th {
+      
+        text-align: center;
+        width: 100%;
+      
+      }
+      
+      header {
+        background: #7BE495;
+        padding: 1rem;
+        color: black;
+        border-bottom: 1px solid black;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 8px 8px 0px 0px;
+      }
+      
+      header h1 {
+       font-size: 1.25rem;
+       text-align: center;
+       font-weight: normal;
+      
+      }
+      tbody {
+          position: relative;
+        top: 100px;
+      }
+      table {
+        background: #7BE495;
+        width: 100%;
+        height: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+      
+      }
+      
+      
+      
+      .headcol {
+        width: 60px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: black;
+        padding: 0.25rem 0;
+        text-align: center;
+        border: 0;
+        position: relative;
+        top: -12px;
+        border-bottom: 1px solid transparent;
+      }
+      
+      thead th {
+        font-size: 1rem;
+        font-weight: bold;
+        color: black;
+        padding: 1rem;
+      }
+      
+      thead {
+          z-index: 2;
+          background: #7BE495;
+          border-bottom: 1px solid black;
+      
+      }
+      
+      tr, tr td {
+        height: 20px;
+      }
+      td {
+        text-align: center;
+      }
+      tr:nth-child(odd) td:not(.headcol) {
+        border-bottom: 1px solid black;
+      }
+      
+      tr:nth-child(even) td:not(.headcol) {
+        border-bottom: 1px solid black;
+      }
+      
+      tr td {
+        border-right: 1px solid black;
+        padding: 0;
+        white-space: none;
+        word-wrap: nowrap;
+      }
+      
+      tbody tr td {
+        position: relative;
+        vertical-align: top;
+        height: 40px;
+        padding: 0.25rem 0.25rem 0 0.25rem;
+        width: auto;
+      
+      }
+      
+      .secondary {
+        color: rgba(0, 0, 0, 0.4);
+      }
+      
+      
+      .checkbox {
+         display: none;
+      }
+      
+      .checkbox + label {
+          border: 0;
+          outline: 0;
+          width: 100px;
+          height: 100px;
+          background: #7BE495;
+          color: transparent;
+          display:block;
+        display: none;
+      }
+      
+      .checkbox:checked + label {
+          border: 0;
+          outline: 0;
+          width: 100%;
+          height: 100%;
+          background: red;
+          color: transparent;
+          display: inline-block;
+      }
+      
+      .event {
+        background: #00B4FC;
+        color: white;
+        border-radius: 2px;
+        text-align: left;
+        font-size: 0.875rem;
+        z-index: 2;
+        padding: 0.5rem;
+        overflow-x: hidden;
+        transition: all 0.2s;
+        cursor: pointer;
+      }
+      
+      .event:hover {
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+        background: #00B4FC;
+      }
+      
+      .event.double {
+        height: 200%;
+      }
+      
+      /**
+      thead {
+          tr {
+            display: block;
+            position: relative;
+          }
+        }
+      tbody {
+          display: block;
+          overflow: auto;
+          width: 800px;
+          height: 100%;
+        }
+      */
+      
+      button.secondary {
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        background: #7BE495;
+        padding: 0.5rem 0.75rem;
+        font-size: 14px;
+        border-radius: 2px;
+        color: rgba(0, 0, 0, 0.5);
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        font-weight: 500;
+      }
+      
+      button.secondary:hover {
+        background: #7BE495;
+      }
+      button.secondary:active {
+        box-shadow: none;
+      }
+      button.secondary:focus {
+        outline: 0;
+      }
+      
+      tr td:nth-child(2), tr td:nth-child(3), .past {
+        background: #7BE495;
+      }
+      
+      .today {
+        color: black;
+      }
+    
+      
+      .icon {
+        font-size: 1.5rem;
+        margin: 0 1rem;
+        text-align: center;
+        cursor: pointer;
+        vertical-align: middle;
+        position: relative;
+        top: -2px;
+      }
+      
+      .icon:hover {
+        color: red;
+      }
       
   </style>
   <title>Tailwind Accordion</title>
@@ -75,34 +317,361 @@
 
     <li class="flex-item flex flex-1 items-center justify-center p-auto cursor-pointer transition-flex duration-800 ease bg-dashboardcolor overflow-hidden" onclick="toggleAccordion(this)">
       <div class="section-title flex items-center justify-center m-5 p-0 text-center text-black font-Arial text-2xl max-w-25">
-        <h2 class="m-auto transform -rotate-90 whitespace-nowrap text-4xl">Your Week</h2>
+        <h2 class="m-auto transform -rotate-90 whitespace-nowrap text-4xl font-bold">Your Week</h2>
       </div>
       <div class="section-content flex items-center justify-center m-0 p-0 opacity-0 transition-all duration-250 delay-100 ease-out overflow-hidden">
       <p>Your week dashboard here dafsckhvqweuhivghervbihjkbqwehurcbihebrchqgebceihjwbFDEQWKDFHB</p>
     </div>
   </li>
 
-  <li class="flex-item flex flex-2 items-center justify-center p-auto cursor-pointer transition-flex duration-800 ease bg-activitycolor overflow-hidden" onclick="toggleAccordion(this)">
+  <li class="flex-item flex flex-2 cursor-pointer transition-flex duration-800 ease bg-activitycolor overflow-hidden" onclick="toggleAccordion(this)">
     <div class="section-title flex items-center justify-center m-5 p-0 text-center text-black font-Arial text-2xl max-w-25">
-      <h2 class="m-auto transform -rotate-90 whitespace-nowrap text-4xl">Activities</h2>
+      <h2 class="m-auto transform -rotate-90 whitespace-nowrap text-4xl font-bold">Activities</h2>
     </div>
-    <div class="section-content flex items-center justify-center m-0 p-0 opacity-0 transition-all duration-250 delay-100 ease-out overflow-hidden">
-      <p>Calendar here</p>
+    <div class="section-content flex flex-row m-0 p-0 opacity-0 transition-all duration-250 delay-100 ease-out overflow-hidden">
+      
+      <div class="calendar">
+  
+        
+        
+        <div class="outer">
+      
+        
+        <table>
+        <thead>
+          <tr>
+            <th class="headcol"></th>
+            <th>Mon, 18</th>
+            <th>Tue, 19</th>
+            <th>Wed, 20</th>
+            <th>Thu, 21</th>
+            <th>Fri, 22</th>
+            <th>Sat, 23</th>
+            <th>Sun, 24</th>
+          </tr>
+        </thead>
+        </table>
+      
+        <div class="wrap"> 
+        <table class="offset">
+      
+        <tbody>
+          <tr>
+            <td class="headcol"></td>
+            <td></td>
+            <td></td>
+            <td ></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol">6:00</td>
+            <td></td>
+            <td></td>
+            <td ></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol"></td>
+            <td></td>
+            <td></td>
+            <td ></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol">7:00</td>
+            <td></td>
+            <td></td>
+            <td class="past"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol"></td>
+            <td></td>
+            <td></td>
+            <td class="now"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol">8:00</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol">9:00</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol">10:00</td>
+            <td></td>
+            <td></td>
+            <td><div class="event double"><input id="check" type="checkbox" class="checkbox" /><label for="check"></label>10:00–11:00 Meeting</div></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol">11:00</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol">12:00</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol">13:00</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol">14:00</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol">15:00</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol">16:00</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol">17:00</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol">18:00</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="headcol"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      </div>
+      
+      </div>
+      <div class="bg-gray-300 w-60 h-96 opacity-100">
+      
+    
+    </div>
+    <div class=" min-h-full w-full  m-5 p-0 text-center drager rounded-lg">
+      <p class="m-auto whitespace-nowrap font-bold text-2xl">Drag&drop</p>
+      <div class="h-16 w-full p-1 my-1 items-center justify-center">
+      <div class="event double rounded-lg"><label for="check"></label>13:00-15:00 Siłownia</div>
+    </div>
     </div>
   </li>
 
   <li class="flex-item flex items-center justify-center p-auto cursor-pointer transition-flex duration-800 ease flex-3 overflow-hidden" onclick="toggleAccordion(this)">
     <div class="section-title flex items-center justify-center m-5 p-0 text-center text-black font-Arial text-2xl max-w-25">
-      <h2 class="m-auto transform -rotate-90 whitespace-nowrap text-4xl">Statistics</h2>
+      <h2 class="m-auto transform -rotate-90 whitespace-nowrap font-bold text-4xl">Statistics</h2>
     </div>
-    <div class="section-content flex items-center justify-center m-0 p-0 opacity-0 transition-all duration-250 delay-100 ease-out overflow-hidden">
-      <p>Statistics contents here</p>
+    <div class="section-content flex items-center justify-items-start m-0 p-0 opacity-0 transition-all duration-250 delay-100 ease-out overflow-hidden">
+      
+
+      <div class="grid grid-cols-2 gap-8 overflow-auto">
+        <div class="stat h-96 w-80 rounded-lg p-4 py-10">
+          <p class="m-auto whitespace-nowrap font-bold text-2xl">Stat1</p>
+        </div>
+        <div class="stat h-96 w-80 rounded-lg p-4 py-10">
+          <p class="m-auto whitespace-nowrap font-bold text-2xl">Stat2</p>
+        </div>
+        <div class="stat h-96 w-80 rounded-lg p-4 py-10">
+          <p class="m-auto whitespace-nowrap font-bold text-2xl">Stat3</p>
+        </div>
+        <div class="stat h-96 w-80 rounded-lg p-4 py-10">
+          <p class="m-auto whitespace-nowrap font-bold text-2xl">Stat4</p>
+        </div>
+      </div>
+
     </div>
   </li>
 
   <li class="flex-item flex items-center justify-center p-auto cursor-pointer transition-flex duration-800 ease flex-4 overflow-hidden" onclick="toggleAccordion(this)">
     <div class="section-title flex items-center justify-center m-5 p-0 text-center text-black font-Arial text-2xl max-w-25">
-      <h2 class="m-auto transform -rotate-90 whitespace-nowrap text-4xl">AI Planner</h2>
+      <h2 class="m-auto transform -rotate-90 whitespace-nowrap font-bold text-4xl">AI Planner</h2>
     </div>
     <div class="section-content flex items-center justify-center m-0 p-0 opacity-0 transition-all duration-250 delay-100 ease-out overflow-hidden">
       <p>Ai planner contents here</p>
@@ -111,7 +680,7 @@
 
   <li class="flex-item flex items-center justify-center p-auto cursor-pointer transition-flex duration-800 ease flex-5 overflow-hidden" onclick="toggleAccordion(this)">
     <div class="section-title flex items-center justify-center m-5 p-0 text-center text-black font-Arial text-2xl max-w-25">
-      <h2 class="m-auto transform -rotate-90 whitespace-nowrap text-4xl">Settings</h2>
+      <h2 class="m-auto transform -rotate-90 whitespace-nowrap font-bold text-4xl">Settings</h2>
     </div>
     <div class="section-content flex items-center justify-center m-0 p-0 opacity-0 transition-all duration-250 delay-100 ease-out overflow-hidden">
       <p>Settings contents here</p>
