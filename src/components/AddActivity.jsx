@@ -5,6 +5,9 @@ import Button from './Ui/Buttons/Button';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Notification, { NotificationType } from './Ui/Notifications/Notification';
+import { PieChart } from 'react-feather';
+import PieChartComponent from './Ui/Charts/Chart';
+import Statistics from './Statistics';
 
 const AddActivity = () => {
 
@@ -20,9 +23,12 @@ const AddActivity = () => {
 
         );
     }
+
+
     return (
-        <div>
+        <div className='flex justify-center flex-col'>            
             <p>to dla testu </p>
+          
             <SearchForm onSubmit={() => { }} />
             <Button className="bg-green-500 hover:bg-green-700" onClick={notify}>Notify!</Button>
             <ToastContainer />

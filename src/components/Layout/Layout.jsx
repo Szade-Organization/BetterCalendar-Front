@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import "../../styles/Layout.css";
 import AddActivity from "../AddActivity";
+import Statistics from "../Statistics";
 
 const Layout = () => {
   const [activeSection, setActiveSection] = useState(null);
@@ -19,7 +20,7 @@ const Layout = () => {
     { title: "Activities", content: "Calendar here", color: "#7BE495" },
     {
       title: "Statistics",
-      content: "Statistics contents here",
+      content: <Statistics />,
       color: "#56C596",
     },
     {
@@ -27,10 +28,15 @@ const Layout = () => {
       content: "AI planner contents here",
       color: "#329D9C",
     },
-    { title: "Settings", content: "Settings contents here", color: "#3C6C8E" },
+    {
+      title: "Settings",
+      content: "Settings contents here",
+      color: "#3C6C8E"
+    },
   ];
 
   return (
+
     <div className="font-lato antialiased maximized">
       <ul className="flex min-h-screen max-h-screen overflow-hidden list-none">
         {sections.map((section, index) => (
