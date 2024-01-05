@@ -47,7 +47,7 @@ const BetterCalendar = () => {
   }
 
   return (
-    <div className="calendar-div">
+    <div className="p-5 bg-white rounded-3xl">
       <h2>Add new event</h2>
       <div>
         <input
