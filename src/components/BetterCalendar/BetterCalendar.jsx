@@ -4,9 +4,10 @@ import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
 import getDay from "date-fns/getDay";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { API_URL } from "../../constants";
 
 const locales = {
   "en-Us": "en-Us",
@@ -20,31 +21,20 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
-const events = [
-  {
-    title: "Big meeting",
-    start: new Date(2023, 11, 5),
-    end: new Date(2023, 11, 5),
-  },
-  {
-    title: "Small meeting",
-    start: new Date(2023, 11, 6),
-    end: new Date(2023, 11, 6),
-  },
-  {
-    title: "Medium meeting",
-    start: new Date(2023, 11, 6),
-    end: new Date(2023, 11, 6),
-  },
-];
-
 const BetterCalendar = () => {
   const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" });
-  const [allEvents, setAllEvents] = useState(events);
+  const [allEvents, setAllEvents] = useState([]);
 
   function handleAddEvent() {
     setAllEvents([...allEvents, newEvent]);
   }
+
+  useEffect(() => {
+    fetch(`${API_URL}/activity`)
+      .then((response) => response.json())
+      .then((events) => setAllEvents(events))
+      .then(console.log(allEvents));
+  }, []);
 
   return (
     <div className="p-5 bg-white rounded-3xl">
