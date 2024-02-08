@@ -9,11 +9,7 @@ import Layout from "./components/Layout/Layout.jsx";
 
 function App() {
   const router = createBrowserRouter(
-    createRoutesFromElements(
-      <Route path="/" element={<Layout />}/>
-    
-  
-    )
+    createRoutesFromElements(<Route path="/" element={<Layout />} />)
   );
   return <RouterProvider router={router} />;
 }
