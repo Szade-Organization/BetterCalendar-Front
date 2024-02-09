@@ -1,30 +1,42 @@
 import { useFormik } from 'formik';
-import React from 'react';
 import * as Yup from 'yup';
 import Button from '../Buttons/Button';
 import Checkbox from '../Inputs/Checkbox';
 import Input from '../Inputs/Input';
 import Select from '../Inputs/Select';
 import TextArea from '../Inputs/TextArea';
+import DatePicker from "react-datepicker";
+import { FaRegCalendarAlt } from 'react-icons/fa';
 
-const ActivityForm = ({ onClose }) => {
+const ActivityForm = ({ onClose, title, values, handleAddEvent }) => {
+    const initialValues = {
+        name: values?.title || '',
+        category: '',
+        startTime: values?.start || '',
+        endTime: values?.end || '',
+        location: '',
+        reoccuring: false,
+        description: '',
+    };
     const formik = useFormik({
-        initialValues: {
-            name: '',
-            category: '',
-            time: '',
-            location: '',
-            reoccuring: false,
-            description: ''
-        },
+        initialValues,
         validationSchema: Yup.object({
             name: Yup.string().required('Required'),
-            category: Yup.string().required('Required'),
-            time: Yup.string().required('Required'),
+            category: Yup.string(),
+            startTime: Yup.date().required('Required'),
+            endTime: Yup.date().required('Required'),
             location: Yup.string(),
             description: Yup.string()
         }),
-        onSubmit: () => {
+        onSubmit: (formValues) => {
+
+            const newEvent = {
+                title: formValues.name,
+                start: formValues.startTime,
+                end: formValues.endTime
+            }
+            console.log(newEvent);
+            handleAddEvent(newEvent);
             onClose();
         },
     });
@@ -35,7 +47,7 @@ const ActivityForm = ({ onClose }) => {
 
         <div className="p-4">
             <div className="mb-4">
-                <h1 className="text-3xl font-semibold">New activity</h1>
+                <h1 className="text-3xl font-semibold">{title}</h1>
             </div>
             <form onSubmit={formik.handleSubmit} method="post">
                 <div className="flex items-center flex-row space-x-4 mb-4 ">
@@ -64,23 +76,36 @@ const ActivityForm = ({ onClose }) => {
                         <option value="option2">Option 2</option>
                         <option value="option3">Option 3</option>
                     </Select>
-                    {formik.touched.name && formik.errors.name ? (
-                        <div className="text-red-500 text-s">{formik.errors.name}</div>
+                    {formik.touched.category && formik.errors.category ? (
+                        <div className="text-red-500 text-s">{formik.errors.category}</div>
                     ) : null}
                 </div>
 
                 <div className="flex items-center flex-row space-x-4 mb-4 ">
-                    <label>Time:</label>
-                    <Input
-                        type="text"
-                        name="time"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.time}
+                    <label>Start Time:</label>
+                    <FaRegCalendarAlt className="text-lg text-gray-400" />
+                    <DatePicker
+                        placeholderText="Start Date"
+                        selected={(formik.values.startTime && new Date(formik.values.startTime)) || null}
+                        onChange={(date) => {
+                            formik.setFieldValue("startTime", date);
+                        }}
+                        className="pl-8 pr-2 py-2"
                     />
-                    {formik.touched.name && formik.errors.name ? (
-                        <div className="text-red-500 text-s">{formik.errors.name}</div>
-                    ) : null}
+
+                </div>
+
+                <div className="flex items-center flex-row space-x-4 mb-4 ">
+                    <label>End Time:</label>
+                    <FaRegCalendarAlt className="text-lg text-gray-400" />
+                    <DatePicker
+                        placeholderText="End Date"
+                        selected={(formik.values.endTime && new Date(formik.values.endTime)) || null}
+                        onChange={(date) => {
+                            formik.setFieldValue("endTime", date);
+                        }}
+                        className="pl-8 pr-2 py-2"
+                    />
                 </div>
 
                 <div className="flex items-center flex-row space-x-4 mb-4 ">
@@ -116,7 +141,7 @@ const ActivityForm = ({ onClose }) => {
 
                 <div className="flex justify-end space-x-3">
                     <Button onClick={onClose} className="bg-gray-500 hover:bg-gray-700" >Cancel</Button>
-                    <Button type="submit" className="bg-green-500 hover:bg-green-700" >Submit</Button>
+                    <Button type="submit" className="bg-green-500 hover:bg-green-700" >Save</Button>
                 </div>
             </form>
 
