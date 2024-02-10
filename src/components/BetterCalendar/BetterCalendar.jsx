@@ -12,6 +12,7 @@ import ActivityForm from "../Ui/Forms/ActivityForm";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+
 const locales = {
   "en-Us": "en-Us",
 };
@@ -25,6 +26,7 @@ const localizer = dateFnsLocalizer({
 });
 
 const BetterCalendar = () => {
+
   const [allEvents, setAllEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -64,6 +66,18 @@ const BetterCalendar = () => {
           date_end: new Date(event.date_end),
         }));
         setAllEvents(formattedEvents);
+      });
+  }, []);
+
+  useEffect(() => {
+    console.log(allEvents);
+  }, [allEvents]);
+
+  useEffect(() => {
+    fetch(`${API_URL}/activity/`)
+      .then((response) => response.json())
+      .then((events) => {
+        setAllEvents(events);
       });
   }, []);
 
