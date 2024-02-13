@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import Modal from "../Ui/Modals/Modal";
 import ActivityForm from "../Ui/Forms/ActivityForm";
+import { useQuery } from "@tanstack/react-query";
 
 import CustomCalendar from "./CustomCalendar";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 const BetterCalendar = () => {
-  const [allEvents, setAllEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
@@ -53,9 +53,13 @@ const BetterCalendar = () => {
       });
   }, []);
 
-  useEffect(() => {
-    console.log(allEvents);
-  }, [allEvents]);
+  const eventsQuery = useQuery({
+    queryKey: ["events"],
+    queryFn: () =>
+      fetch(`${API_URL}/activity/`)
+        .then((response) => response.json())
+        .then((data) => data.map(convertEventDates)),
+  });
 
   useEffect(() => {
     fetch(`${API_URL}/activity/`)
@@ -96,11 +100,12 @@ const BetterCalendar = () => {
         />
       )}
       <CustomCalendar
-        events={allEvents}
+        events={eventsQuery.data}
         titleAccessor="name"
         startAccessor="date_start"
         endAccessor="date_end"
         style={{ width: 600, height: 600, margin: 20 }}
+        className="overflow-auto"
         setShowAddForm={setShowAddForm}
         handleEventSelect={handleEventSelect}
       />
