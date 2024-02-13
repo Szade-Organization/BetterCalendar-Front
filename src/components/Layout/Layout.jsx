@@ -47,8 +47,9 @@ const Layout = () => {
         {sections.map((section, index) => (
           <li
             key={index}
-            className={`flex-item cursor-pointer transition-flex duration-800 ease bg-activitycolor overflow-hidden flex-${index + 1
-              } ${activeSection === index ? "active" : ""}`}
+            className={`flex-item cursor-pointer transition-flex duration-800 ease bg-activitycolor overflow-hidden flex-${
+              index + 1
+            } ${activeSection === index ? "active" : ""}`}
             style={{ background: section.color }}
             onClick={() => toggleAccordion(index)}
           >
@@ -58,12 +59,12 @@ const Layout = () => {
               </h2>
             </div>
             <div className="section-content flex items-center justify-center m-0 p-0 opacity-0 transition-all duration-250 delay-100 ease-out overflow-hidden">
-              <p>{section.content}</p>
+              <div className="w-5/6">{section.content}</div>
             </div>
           </li>
         ))}
       </ul>
-      <ToastContainer position="bottom-right"/>
+      <ToastContainer position="bottom-right" />
     </div>
   );
 };

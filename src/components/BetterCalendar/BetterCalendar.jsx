@@ -3,17 +3,13 @@ import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import Modal from "../Ui/Modals/Modal";
 import ActivityForm from "../Ui/Forms/ActivityForm";
+import { useQuery } from "@tanstack/react-query";
 
 import CustomCalendar from "./CustomCalendar";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-
-
-
 const BetterCalendar = () => {
-
-  const [allEvents, setAllEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
@@ -32,7 +28,9 @@ const BetterCalendar = () => {
   const handleEditEvent = (eventId, updatedEvent) => {
     setAllEvents((currentEvents) =>
       currentEvents.map((event) =>
-        event.id === eventId ? { ...event, ...convertEventDates(updatedEvent) } : event
+        event.id === eventId
+          ? { ...event, ...convertEventDates(updatedEvent) }
+          : event
       )
     );
   };
@@ -41,8 +39,7 @@ const BetterCalendar = () => {
     setSelectedEvent(event);
     console.log(event);
     setShowDetails(true);
-  }
-
+  };
   useEffect(() => {
     fetch(`${API_URL}/activity/`)
       .then((response) => response.json())
@@ -56,44 +53,61 @@ const BetterCalendar = () => {
       });
   }, []);
 
-  useEffect(() => {
-    console.log(allEvents);
-  }, [allEvents]);
+  const eventsQuery = useQuery({
+    queryKey: ["events"],
+    queryFn: () =>
+      fetch(`${API_URL}/activity/`)
+        .then((response) => response.json())
+        .then((data) => data.map(convertEventDates)),
+  });
 
   useEffect(() => {
     fetch(`${API_URL}/activity/`)
       .then((response) => response.json())
       .then((events) => {
-        setAllEvents(events);
+        setAllEvents(manipulateEvents(events));
       });
   }, []);
 
-  useEffect(() => {
-    console.log(allEvents);
-  }, [allEvents]);
+  const manipulateEvents = (events) =>
+    events.map((event) => ({
+      category: event.category,
+      date_created: new Date(event.date_created),
+      date_end: new Date(event.date_end),
+      date_modified: new Date(event.date_modified),
+      date_start: new Date(event.date_start),
+      description: event.description,
+      id: event.id,
+      importance_level: event.importance_level,
+      is_planned: event.is_planned,
+      length: event.length,
+      name: event.name,
+      user: event.user,
+    }));
 
   return (
-    <div className="p-3 bg-white rounded-3xl">
-      <div className="flex justify-end mr-9">
-      
-      </div>
-      {showAddForm &&
+    <div className="p-5 bg-white rounded-3xl min-w-full">
+      <div className="flex justify-end mr-9"></div>
+      {showAddForm && (
         <Modal
-          content={<ActivityForm
-            onClose={() => setShowAddForm(false)}
-            title={"New activity"}
-            handleAddEvent={handleAddEvent}
-          />}
+          content={
+            <ActivityForm
+              onClose={() => setShowAddForm(false)}
+              title={"New activity"}
+              handleAddEvent={handleAddEvent}
+            />
+          }
         />
-      }
-      <CustomCalendar    
-        events={allEvents}
+      )}
+      <CustomCalendar
+        events={eventsQuery.data}
         titleAccessor="name"
         startAccessor="date_start"
         endAccessor="date_end"
-        style={{ width: 600, height: 600, margin: 20 }}     
+        style={{ width: 600, height: 600, margin: 20 }}
+        className="overflow-auto"
         setShowAddForm={setShowAddForm}
-        handleEventSelect={handleEventSelect}      
+        handleEventSelect={handleEventSelect}
       />
       {showDetails && (
         <Modal
@@ -105,8 +119,8 @@ const BetterCalendar = () => {
               handleAddEvent={handleAddEvent}
               handleEditEvent={handleEditEvent}
               isEditing={true}
-
-            />}
+            />
+          }
         />
       )}
     </div>
