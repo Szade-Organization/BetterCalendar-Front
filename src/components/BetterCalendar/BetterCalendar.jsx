@@ -91,8 +91,7 @@ const BetterCalendar = () => {
         titleAccessor="name"
         startAccessor="date_start"
         endAccessor="date_end"
-        style={{ width: 600, height: 600, margin: 20 }}
-        onSelectEvent={handleEventSelect}  
+        style={{ width: 600, height: 600, margin: 20 }}     
         setShowAddForm={setShowAddForm}
         handleEventSelect={handleEventSelect}      
       />
