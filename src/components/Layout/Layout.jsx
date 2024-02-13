@@ -4,6 +4,7 @@ import "../../styles/Layout.css";
 import AddActivity from "../AddActivity";
 import Statistics from "../Statistics";
 import BetterCalendar from "../BetterCalendar/BetterCalendar";
+import { ToastContainer } from "react-toastify";
 
 const Layout = () => {
   const [activeSection, setActiveSection] = useState(null);
@@ -46,9 +47,8 @@ const Layout = () => {
         {sections.map((section, index) => (
           <li
             key={index}
-            className={`flex-item cursor-pointer transition-flex duration-800 ease bg-activitycolor overflow-hidden flex-${
-              index + 1
-            } ${activeSection === index ? "active" : ""}`}
+            className={`flex-item cursor-pointer transition-flex duration-800 ease bg-activitycolor overflow-hidden flex-${index + 1
+              } ${activeSection === index ? "active" : ""}`}
             style={{ background: section.color }}
             onClick={() => toggleAccordion(index)}
           >
@@ -63,6 +63,7 @@ const Layout = () => {
           </li>
         ))}
       </ul>
+      <ToastContainer position="bottom-right"/>
     </div>
   );
 };
