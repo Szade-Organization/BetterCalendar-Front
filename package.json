@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.20.2",
+    "@tanstack/react-query-devtools": "^5.20.2",
     "chart.js": "^4.4.1",
     "date-fns": "^3.1.0",
     "feather-icons-react": "^0.7.0",
