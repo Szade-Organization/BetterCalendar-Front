@@ -1,7 +1,7 @@
 import activityicon from "../assets/activityicon.gif";
 import timer from "../assets/timer.gif";
-import CardStatistics from "./Statistics/CardStatistics";
-import Chart from "./Ui/Charts/Chart";
+import CardStatistics from "./CardStatistics";
+import Chart from "../Ui/Charts/Chart";
 
 const Statistics = () => {
   const data = {

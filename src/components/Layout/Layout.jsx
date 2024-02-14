@@ -16,7 +16,7 @@ const Layout = () => {
   const sections = [
     {
       title: "Your week",
-      content: <AddActivity />,
+      content: "Your week contents here",
       color: "#CFF4D2",
     },
     {
