@@ -1,128 +1,124 @@
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import Modal from "../Ui/Modals/Modal";
 import ActivityForm from "../Ui/Forms/ActivityForm";
-import { useQuery } from "@tanstack/react-query";
-
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import CustomCalendar from "./CustomCalendar";
-
-const API_URL = import.meta.env.VITE_API_URL;
+import { addActivity, editActivity, fetchActivities } from "../../services/ActivityService";
+import { useMutation } from '@tanstack/react-query';
+import { toast } from "react-toastify";
+import Toast, { ToastType } from "../Ui/Toast/Toast";
 
 const BetterCalendar = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
+  const queryClient = useQueryClient();
 
-  const convertEventDates = (event) => ({
-    ...event,
-    date_start: new Date(event.date_start),
-    date_end: new Date(event.date_end),
-  });
-
-  const handleAddEvent = (newEvent) => {
-    const eventWithDates = convertEventDates(newEvent);
-    setAllEvents([...allEvents, eventWithDates]);
-  };
-
-  const handleEditEvent = (eventId, updatedEvent) => {
-    setAllEvents((currentEvents) =>
-      currentEvents.map((event) =>
-        event.id === eventId
-          ? { ...event, ...convertEventDates(updatedEvent) }
-          : event
-      )
-    );
-  };
-
-  const handleEventSelect = (event) => {
-    setSelectedEvent(event);
-    console.log(event);
-    setShowDetails(true);
-  };
-  useEffect(() => {
-    fetch(`${API_URL}/activity/`)
-      .then((response) => response.json())
-      .then((fetchedEvents) => {
-        const formattedEvents = fetchedEvents.map((event) => ({
-          ...event,
-          date_start: new Date(event.date_start),
-          date_end: new Date(event.date_end),
-        }));
-        setAllEvents(formattedEvents);
-      });
-  }, []);
 
   const eventsQuery = useQuery({
     queryKey: ["events"],
-    queryFn: () =>
-      fetch(`${API_URL}/activity/`)
-        .then((response) => response.json())
-        .then((data) => data.map(convertEventDates)),
+    queryFn: fetchActivities,
   });
 
-  useEffect(() => {
-    fetch(`${API_URL}/activity/`)
-      .then((response) => response.json())
-      .then((events) => {
-        setAllEvents(manipulateEvents(events));
-      });
-  }, []);
+  const addEventMutation = useMutation(addActivity, {
+    onMutate: async (newEvent) => {
+      await queryClient.cancelQueries(["events"]);
 
-  const manipulateEvents = (events) =>
-    events.map((event) => ({
-      category: event.category,
-      date_created: new Date(event.date_created),
-      date_end: new Date(event.date_end),
-      date_modified: new Date(event.date_modified),
-      date_start: new Date(event.date_start),
-      description: event.description,
-      id: event.id,
-      importance_level: event.importance_level,
-      is_planned: event.is_planned,
-      length: event.length,
-      name: event.name,
-      user: event.user,
-    }));
+      const previousEvents = queryClient.getQueryData(["events"]);
+      queryClient.setQueryData(["events"], (old) => [...old, newEvent]);
 
+      return { previousEvents };
+    },
+    onError: (err, newEvent, context) => {
+      queryClient.setQueryData(["events"], context.previousEvents);
+      toast(<Toast type={ToastType.ERROR} message="Error when adding activity" />);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(["events"]);
+    },
+  });
+
+  const editEventMutation = useMutation(editActivity, {
+    onMutate: async ({ id, activity }) => {
+      await queryClient.cancelQueries(["events"]);
+
+      const previousEvents = queryClient.getQueryData(["events"]);
+      queryClient.setQueryData(["events"], (old) =>
+        old.map((event) => (event.id === id ? { ...event, ...activity } : event))
+      );
+
+      return { previousEvents };
+    },
+    onError: (err, { id, activity }, context) => {
+      queryClient.setQueryData(["events"], context.previousEvents);
+      toast(<Toast type={ToastType.ERROR} message="Error when updating activity" />);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(["events"]);
+    },
+  });
+
+
+  const handleAddEvent = (newEvent) => {
+    addEventMutation.mutate(newEvent);
+  };
+
+  const handleEditEvent = (eventId, updatedEvent) => {
+    editEventMutation.mutate({ id: eventId, activity: updatedEvent });
+  };
+
+  const handleEventSelect = (event) => {
+    setSelectedEvent(event);    
+    setShowDetails(true);    
+  };
+
+
+  if (eventsQuery.isLoading) {
+    return <div>Loading...</div>
+  }
+  if (eventsQuery.isError) {
+    return <div>Error: {eventsQuery.error.message}</div>;
+  }
   return (
-    <div className="p-5 bg-white rounded-3xl min-w-full">
-      <div className="flex justify-end mr-9"></div>
-      {showAddForm && (
-        <Modal
-          content={
-            <ActivityForm
-              onClose={() => setShowAddForm(false)}
-              title={"New activity"}
-              handleAddEvent={handleAddEvent}
-            />
-          }
+    <div className="flex justify-center items-center h-screen">
+      <div className="p-5 bg-white rounded-3xl min-w-full max-w-xl">
+        {showAddForm && (
+          <Modal
+            content={
+              <ActivityForm
+                onClose={() => setShowAddForm(false)}
+                title={"New activity"}
+                handleAddEvent={handleAddEvent}
+              />
+            }
+          />
+        )}
+        <CustomCalendar
+          events={eventsQuery.data}
+          titleAccessor="name"
+          startAccessor="date_start"
+          endAccessor="date_end"
+          style={{ height: 600, margin: 20 }}
+          className="overflow-auto"
+          setShowAddForm={setShowAddForm}
+          handleEventSelect={handleEventSelect}
         />
-      )}
-      <CustomCalendar
-        events={eventsQuery.data}
-        titleAccessor="name"
-        startAccessor="date_start"
-        endAccessor="date_end"
-        style={{ width: 600, height: 600, margin: 20 }}
-        className="overflow-auto"
-        setShowAddForm={setShowAddForm}
-        handleEventSelect={handleEventSelect}
-      />
-      {showDetails && (
-        <Modal
-          content={
-            <ActivityForm
-              onClose={() => setShowDetails(false)}
-              title={"Edit activity"}
-              values={selectedEvent}
-              handleAddEvent={handleAddEvent}
-              handleEditEvent={handleEditEvent}
-              isEditing={true}
-            />
-          }
-        />
-      )}
+        {showDetails && (
+          <Modal
+            content={
+              <ActivityForm
+                onClose={() => setShowDetails(false)}
+                title={"Edit activity"}
+                values={selectedEvent}
+                handleEditEvent={handleEditEvent}
+                isEditing={true}
+              />
+            }
+          />
+        )}
+      </div>
     </div>
   );
 };

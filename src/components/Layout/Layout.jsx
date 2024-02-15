@@ -1,10 +1,7 @@
-import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
+import  { useState } from "react";
 import "../../styles/Layout.css";
-import AddActivity from "../AddActivity";
-import Statistics from "../Statistics";
 import BetterCalendar from "../BetterCalendar/BetterCalendar";
-import { ToastContainer } from "react-toastify";
+import Statistics from "../Statistics/Statistics";
 
 const Layout = () => {
   const [activeSection, setActiveSection] = useState(null);
@@ -16,7 +13,7 @@ const Layout = () => {
   const sections = [
     {
       title: "Your week",
-      content: <AddActivity />,
+      content: "Your week contents here",
       color: "#CFF4D2",
     },
     {
@@ -64,7 +61,7 @@ const Layout = () => {
           </li>
         ))}
       </ul>
-      <ToastContainer position="bottom-right" />
+      
     </div>
   );
 };
