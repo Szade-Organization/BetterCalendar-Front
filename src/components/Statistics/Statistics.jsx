@@ -1,5 +1,5 @@
-import activityicon from "../assets/activityicon.gif";
-import timer from "../assets/timer.gif";
+import activityicon from "../../assets/activityicon.gif";
+import timer from "../../assets/timer.gif";
 import CardStatistics from "./CardStatistics";
 import Chart from "../Ui/Charts/Chart";
 

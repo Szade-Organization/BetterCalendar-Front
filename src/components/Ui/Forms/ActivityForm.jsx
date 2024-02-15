@@ -9,13 +9,13 @@ import DatePicker from "react-datepicker";
 import { FaRegCalendarAlt } from 'react-icons/fa';
 
 const ActivityForm = ({ onClose, title, values, handleAddEvent, handleEditEvent, isEditing }) => {
-    const initialValues = {
-        name: values?.name || '',
-        category: values?.category || '',
-        date_start: values?.date_start || '',
-        date_end: values?.date_end || '',
-        description: values?.description || '',
-        importance_level: values?.importance_level || '',
+    const initialValues =values|| {
+        name: '',
+        category: '',
+        date_start:  '',
+        date_end:  '',
+        description:  '',
+        importance_level: '',
     };
     const formik = useFormik({
         initialValues,
@@ -35,8 +35,9 @@ const ActivityForm = ({ onClose, title, values, handleAddEvent, handleEditEvent,
                 date_end: formValues.date_end.toISOString(),
                 importance_level: formValues.importance_level,
                 category: formValues.category,
+                user: 1,
             };
-
+            console.log("event to save",eventToSave);
             if (isEditing && values?.id) {
                 handleEditEvent(values.id, eventToSave);
             } else {
@@ -80,9 +81,9 @@ const ActivityForm = ({ onClose, title, values, handleAddEvent, handleEditEvent,
                         value={formik.values.category}
                     >
 
-                        <option value="1">Option 1</option>
-                        <option value="2">Option 2</option>
-                        <option value="3">Option 3</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
                     </Select>
                     {formik.touched.category && formik.errors.category && (
                         <div className="text-red-500 text-s">{formik.errors.category}</div>
