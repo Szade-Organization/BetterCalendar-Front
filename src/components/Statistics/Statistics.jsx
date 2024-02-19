@@ -1,5 +1,5 @@
-import activityicon from "../../assets/activityicon.gif";
-import timer from "../../assets/timer.gif";
+import activityicon from "../../assets/activity-once.gif";
+import timer from "../../assets/timer-once.gif";
 import CardStatistics from "./CardStatistics";
 import Chart from "../Ui/Charts/Chart";
 
@@ -52,7 +52,7 @@ const Statistics = () => {
           text="Total activities"
         />
         <CardStatistics icon={timer} number={168} text="Total time" />
-        <CardStatistics number={100} text="Rest time" />
+        <CardStatistics icon={timer} number={100} text="Rest time" />
       </div>
       <div className="m-10 grid grid-cols-1 sm:grid-cols-2 gap-8 items-end">
         <div>
