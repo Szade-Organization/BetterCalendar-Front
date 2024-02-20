@@ -5,10 +5,15 @@ import Modal from "../Ui/Modals/Modal";
 import ActivityForm from "../Ui/Forms/ActivityForm";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import CustomCalendar from "./CustomCalendar";
-import { addActivity, editActivity, fetchActivities } from "../../services/ActivityService";
-import { useMutation } from '@tanstack/react-query';
+import {
+  addActivity,
+  editActivity,
+  fetchActivities,
+} from "../../services/ActivityService";
+import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import Toast, { ToastType } from "../Ui/Toast/Toast";
+import { Spinner } from "../Ui/Spinners/Spinner";
 
 const BetterCalendar = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -16,10 +21,14 @@ const BetterCalendar = () => {
   const [showDetails, setShowDetails] = useState(false);
   const queryClient = useQueryClient();
 
-
   const eventsQuery = useQuery({
     queryKey: ["events"],
     queryFn: fetchActivities,
+    onError: () => {
+      toast(
+        <Toast type={ToastType.ERROR} message="Couldn't load activities" />
+      );
+    },
   });
 
   const addEventMutation = useMutation(addActivity, {
@@ -33,7 +42,9 @@ const BetterCalendar = () => {
     },
     onError: (err, newEvent, context) => {
       queryClient.setQueryData(["events"], context.previousEvents);
-      toast(<Toast type={ToastType.ERROR} message="Error when adding activity" />);
+      toast(
+        <Toast type={ToastType.ERROR} message="Error when adding activity" />
+      );
     },
     onSettled: () => {
       queryClient.invalidateQueries(["events"]);
@@ -46,20 +57,23 @@ const BetterCalendar = () => {
 
       const previousEvents = queryClient.getQueryData(["events"]);
       queryClient.setQueryData(["events"], (old) =>
-        old.map((event) => (event.id === id ? { ...event, ...activity } : event))
+        old.map((event) =>
+          event.id === id ? { ...event, ...activity } : event
+        )
       );
 
       return { previousEvents };
     },
     onError: (err, { id, activity }, context) => {
       queryClient.setQueryData(["events"], context.previousEvents);
-      toast(<Toast type={ToastType.ERROR} message="Error when updating activity" />);
+      toast(
+        <Toast type={ToastType.ERROR} message="Error when updating activity" />
+      );
     },
     onSettled: () => {
       queryClient.invalidateQueries(["events"]);
     },
   });
-
 
   const handleAddEvent = (newEvent) => {
     addEventMutation.mutate(newEvent);
@@ -70,17 +84,14 @@ const BetterCalendar = () => {
   };
 
   const handleEventSelect = (event) => {
-    setSelectedEvent(event);    
-    setShowDetails(true);    
+    setSelectedEvent(event);
+    setShowDetails(true);
   };
 
-
   if (eventsQuery.isLoading) {
-    return <div>Loading...</div>
+    return <Spinner />;
   }
-  if (eventsQuery.isError) {
-    return <div>Error: {eventsQuery.error.message}</div>;
-  }
+
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="p-5 bg-white rounded-3xl min-w-full max-w-xl">
