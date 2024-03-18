@@ -1,5 +1,3 @@
-import activityicon from "../../assets/activity-once.gif";
-import timer from "../../assets/timer-once.gif";
 import CardStatistics from "./CardStatistics";
 import Chart from "../Ui/Charts/Chart";
 
@@ -47,12 +45,12 @@ const Statistics = () => {
       </div>
       <div className="flex flex-wrap">
         <CardStatistics
-          icon={activityicon}
+          icon="/assets/icons/activityicon.gif"
           number={100}
           text="Total activities"
         />
-        <CardStatistics icon={timer} number={168} text="Total time" />
-        <CardStatistics icon={timer} number={100} text="Rest time" />
+        <CardStatistics icon="/assets/icons/timer.gif" number={168} text="Total time" />
+        <CardStatistics icon="/assets/icons/timer.gif" number={100} text="Rest time" />
       </div>
       <div className="m-10 grid grid-cols-1 sm:grid-cols-2 gap-8 items-end">
         <div>
