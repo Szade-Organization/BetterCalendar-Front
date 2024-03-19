@@ -1,9 +1,9 @@
 import  { useState } from "react";
 import "../../styles/Layout.css";
-import BetterCalendar from "../BetterCalendar/BetterCalendar";
-import Statistics from "../Statistics/Statistics";
+import BetterCalendar from "../../components/BetterCalendar/BetterCalendar";
+import Statistics from "../../components/Statistics/Statistics";
 
-const Layout = () => {
+const AccordionLayout = () => {
   const [activeSection, setActiveSection] = useState(null);
 
   const toggleAccordion = (index) => {
@@ -66,4 +66,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default AccordionLayout;

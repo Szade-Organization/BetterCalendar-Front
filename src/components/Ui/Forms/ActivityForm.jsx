@@ -45,8 +45,7 @@ const ActivityForm = ({
         importance_level: formValues.importance_level,
         category: formValues.category,
         user: 1,
-      };
-      console.log("event to save", eventToSave);
+      };  
       if (isEditing && values?.id) {
         handleEditEvent(values.id, eventToSave);
       } else {
