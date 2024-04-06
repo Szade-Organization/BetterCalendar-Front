@@ -24,26 +24,27 @@ export function AuthProvider({ children }) {
     const navigate = useNavigate();
     const [user, setUser] = useState(initialUser);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);   
+    const [isLoading, setIsLoading] = useState(false);
+
+    const checkAuth = async () => {
+        const token = localStorage.getItem('jwt');
+        if (token && token !== 'undefined' && token !== '') {
+            setIsLoading(true);
+            try {
+                const data = await getUser();
+                setUser(data);
+                setIsAuthenticated(true);
+            } catch (error) {
+                console.error("An error occurred: ", error);
+            } finally {
+                setIsLoading(false);
+            }
+        }
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            const token = localStorage.getItem('jwt');
-            if (token && token !== 'undefined'&& token !== '') {
-                setIsLoading(true);
-                try {
-                    const data = await getUser();
-                    setUser(data);
-                    setIsAuthenticated(true);
-                } catch (error) {                    
-                    console.error("An error occurred: ", error);
-                } finally {
-                    setIsLoading(false);
-                }
-            }
-        };
-    
-        fetchData();
+
+        checkAuth();
     }, []);
 
 
