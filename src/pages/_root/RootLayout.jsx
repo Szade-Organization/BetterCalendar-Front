@@ -6,8 +6,11 @@ const RootLayout = () => {
     const { isAuthenticated, isLoading } = useUserContext();
 
     if (isLoading) {
-        console.log('loading user');
-        return <Spinner />;
+        return (
+            <div className="flex flex-1 justify-center items-center">
+                <Spinner />
+            </div>);
+
     }
 
 
@@ -17,7 +20,7 @@ const RootLayout = () => {
 
 
     return (
-        <div className="w-full h-full">     
+        <div className="w-full h-full">
             <Outlet />
         </div>
     );

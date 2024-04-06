@@ -2,6 +2,24 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+const api = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('jwt');
+  if (token) {
+    config.headers['Authorization'] =  token ? `Token ${token}` : ''; 
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
+
 const convertEventDates = (event) => ({
   ...event,
   date_start: new Date(event.date_start),
@@ -10,7 +28,7 @@ const convertEventDates = (event) => ({
 
 export const fetchActivities = async () => {
   try {
-    const response = await axios.get(`${API_URL}/activity/`);
+    const response = await api.get(`/activity/`); 
     const data = response.data.map(convertEventDates);
     return data;
   } catch (error) {
@@ -19,11 +37,7 @@ export const fetchActivities = async () => {
 };
 
 export const addActivity = async (activity) => {
-  const response = await axios.post(`${API_URL}/activity/`, activity, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }); 
+  const response = await api.post(`/activity/`, activity); 
   if (response.status !== 201) {
     throw new Error("Failed to add activity");
   }
@@ -32,45 +46,9 @@ export const addActivity = async (activity) => {
 
 export const editActivity = async ({ id, activity }) => {
   try {
-    const response = await axios.put(`${API_URL}/activity/${id}/`, activity, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });  
+    const response = await api.put(`/activity/${id}/`, activity); 
     return convertEventDates(response.data);
   } catch (error) {
     throw new Error(`Failed to update activity with ID ${id}`);
-  }
-};
-
-export const createUserAccount = async (user) => {
-  try {
-    const response = await axios.post(`${API_URL}/user/`, user, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (response.status !== 201) {
-      throw new Error("Failed to create user account");
-    }
-    return response.data;
-  } catch (error) {
-    throw new Error("Failed to create user account");
-  }
-};
-
-export const loginUser = async (user) => {
-  try {
-    const response = await axios.post(`${API_URL}/user/`, user, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (response.status !== 201) {
-      throw new Error("Failed to create user account");
-    }
-    return response.data;
-  } catch (error) {
-    throw new Error("Failed to create user account");
   }
 };
