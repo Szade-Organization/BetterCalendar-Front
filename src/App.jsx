@@ -9,7 +9,7 @@ import RegisterPage from "./pages/_auth/RegisterPage.jsx";
 function App() {
 
   return (
-    <main className="flex min-h-screen w-full">
+    <main className="flex min-h-screen w-full bg-week-background" >
       <Routes>
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<LoginPage />} />

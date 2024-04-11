@@ -2,6 +2,7 @@ import  { useState } from "react";
 import "../../styles/Layout.css";
 import BetterCalendar from "../../components/BetterCalendar/BetterCalendar";
 import Statistics from "../../components/Statistics/Statistics";
+import SettingsComponents from "../../components/SettingsComponent/SettingsComponents";
 
 const AccordionLayout = () => {
   const [activeSection, setActiveSection] = useState(null);
@@ -33,7 +34,7 @@ const AccordionLayout = () => {
     },
     {
       title: "Settings",
-      content: "Settings contents here",
+      content:<SettingsComponents />,
       color: "#3C6C8E",
     },
   ];
@@ -56,7 +57,7 @@ const AccordionLayout = () => {
               </h2>
             </div>
             <div className="section-content flex items-center justify-center m-0 p-0 opacity-0 transition-all duration-250 delay-100 ease-out overflow-hidden">
-              <div className="w-5/6">{section.content}</div>
+              <div className="w-full">{section.content}</div>
             </div>
           </li>
         ))}

@@ -4,10 +4,14 @@ import { useUserContext } from "../../context/AuthContext";
 
 
 export default function AuthLayout() {
-    const { isAuthenticated, isLoading } = useUserContext(); 
+    const { isAuthenticated, isLoading } = useUserContext();
 
-    if (isLoading) {  
-        return <Spinner />;
+    if (isLoading) {
+        return (
+            <div className="flex flex-1 justify-center items-center">
+                <Spinner />
+            </div>);
+
     }
     return (
         <>
