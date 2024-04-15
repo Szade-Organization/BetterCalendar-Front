@@ -1,8 +1,9 @@
-import  { useState } from "react";
+import { useState } from "react";
 import "../../styles/Layout.css";
 import BetterCalendar from "../../components/BetterCalendar/BetterCalendar";
 import Statistics from "../../components/Statistics/Statistics";
 import SettingsComponents from "../../components/SettingsComponent/SettingsComponents";
+import YourWeek from "../../components/YourWeek/YourWeek";
 
 const AccordionLayout = () => {
   const [activeSection, setActiveSection] = useState(null);
@@ -14,7 +15,7 @@ const AccordionLayout = () => {
   const sections = [
     {
       title: "Your week",
-      content: "Your week contents here",
+      content: <YourWeek />,
       color: "#CFF4D2",
     },
     {
@@ -34,7 +35,7 @@ const AccordionLayout = () => {
     },
     {
       title: "Settings",
-      content:<SettingsComponents />,
+      content: <SettingsComponents />,
       color: "#3C6C8E",
     },
   ];
@@ -57,12 +58,11 @@ const AccordionLayout = () => {
               </h2>
             </div>
             <div className="section-content flex items-center justify-center m-0 p-0 opacity-0 transition-all duration-250 delay-100 ease-out overflow-hidden">
-              <div className="w-full">{section.content}</div>
+              <div className="w-full mr-8">{section.content}</div>
             </div>
           </li>
         ))}
       </ul>
-      
     </div>
   );
 };

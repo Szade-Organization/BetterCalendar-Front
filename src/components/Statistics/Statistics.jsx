@@ -39,18 +39,23 @@ const Statistics = () => {
   };
 
   return (
-    <div className="p-5 bg-white rounded-3xl min-w-full">
-      <div className="m-10 text-3xl font-semibold text-gray-700">
-        Statistics
-      </div>
+    <div className="p-5 bg-white rounded-3xl min-w-full pt-16">
       <div className="flex flex-wrap">
         <CardStatistics
           icon="/assets/icons/activityicon.gif"
           number={100}
           text="Total activities"
         />
-        <CardStatistics icon="/assets/icons/timer.gif" number={168} text="Total time" />
-        <CardStatistics icon="/assets/icons/timer.gif" number={100} text="Rest time" />
+        <CardStatistics
+          icon="/assets/icons/timer.gif"
+          number={168}
+          text="Total time"
+        />
+        <CardStatistics
+          icon="/assets/icons/timer.gif"
+          number={100}
+          text="Rest time"
+        />
       </div>
       <div className="m-10 grid grid-cols-1 sm:grid-cols-2 gap-8 items-end">
         <div>
