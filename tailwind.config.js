@@ -4,11 +4,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        'week-background': '#CFF4D2',
-        'activities-background': '#7BE495',
-        'statistics-background': '#56C596',
-        'planner-background': '#329D9C',
-        'settings-background': '#3C6C8E',
+        "week-background": "#CFF4D2",
+        "activities-background": "#7BE495",
+        "statistics-background": "#56C596",
+        "planner-background": "#329D9C",
+        "settings-background": "#3C6C8E",
+        "grey-background": "#ECECEC",
       },
     },
   },
