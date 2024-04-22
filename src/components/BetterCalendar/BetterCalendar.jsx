@@ -7,6 +7,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import CustomCalendar from "./CustomCalendar";
 import {
   addActivity,
+  deleteActivity,
   editActivity,
   fetchActivities,
 } from "../../services/ActivityService";
@@ -75,6 +76,29 @@ const BetterCalendar = () => {
     },
   });
 
+  const deleteEventMutation = useMutation(deleteActivity, {
+    onMutate: async (eventId) => {
+      await queryClient.cancelQueries(["events"]);
+
+      const previousEvents = queryClient.getQueryData(["events"]);
+      queryClient.setQueryData(
+        ["events"],
+        previousEvents.filter((event) => event.id !== eventId)
+      );
+
+      return { previousEvents };
+    },
+    onError: (err, eventId, context) => {
+      queryClient.setQueryData(["events"], context.previousEvents);
+      toast(
+        <Toast type={ToastType.ERROR} message="Error when deleting activity" />
+      );
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(["events"]);
+    },
+  });
+
   const handleAddEvent = (newEvent) => {
     addEventMutation.mutate(newEvent);
   };
@@ -82,6 +106,11 @@ const BetterCalendar = () => {
   const handleEditEvent = (eventId, updatedEvent) => {
     editEventMutation.mutate({ id: eventId, activity: updatedEvent });
   };
+
+  const handleDeleteEvent = () => {
+    deleteEventMutation.mutate(selectedEvent.id);
+    setShowAddForm(false);
+  }
 
   const handleEventSelect = (event) => {
     setSelectedEvent(event);
@@ -94,7 +123,7 @@ const BetterCalendar = () => {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="p-5 bg-white rounded-3xl min-w-full max-w-xl">
+      <div className="p-5 bg-white rounded-3xl w-full">
         {showAddForm && (
           <Modal
             content={
@@ -102,9 +131,12 @@ const BetterCalendar = () => {
                 onClose={() => setShowAddForm(false)}
                 title={"New activity"}
                 handleAddEvent={handleAddEvent}
+
               />
             }
+            className="w-[90%] lg:w-3/4"
           />
+
         )}
         <CustomCalendar
           events={eventsQuery.data}
@@ -125,8 +157,10 @@ const BetterCalendar = () => {
                 values={selectedEvent}
                 handleEditEvent={handleEditEvent}
                 isEditing={true}
+                handleDeleteEvent={handleDeleteEvent}
               />
             }
+            className="w-[90%] lg:w-3/4"
           />
         )}
       </div>

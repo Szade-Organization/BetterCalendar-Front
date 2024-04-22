@@ -52,3 +52,14 @@ export const editActivity = async ({ id, activity }) => {
     throw new Error(`Failed to update activity with ID ${id}`);
   }
 };
+
+export const deleteActivity = async (id) => {
+  try {
+    const response=await api.delete(`/activity/${id}/`); 
+    if(response.status!==204){
+      throw new Error("Failed to delete activity");
+    }
+  } catch (error) {
+    throw new Error(`Failed to delete activity with ID ${id}`);
+  }
+}
