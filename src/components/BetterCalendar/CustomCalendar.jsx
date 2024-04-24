@@ -8,16 +8,19 @@ import subMonths from 'date-fns/subMonths';
 import addWeeks from 'date-fns/addWeeks';
 import subWeeks from 'date-fns/subWeeks';
 import startOfToday from 'date-fns/startOfToday';
+import { enGB  } from 'date-fns/locale';
 
 import { Calendar, dateFnsLocalizer, Navigate } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import './Calendar.css';
 import TopToolbar from './TopToolbar';
 import BottomToolbar from './BottomToolbar';
 import { addDays, endOfWeek, subDays } from 'date-fns';
 
 export const ToolbarContext = React.createContext();
+
 const locales = {
-    "en-Us": "en-Us",
+    'en-GB': enGB
 };
 
 const localizer = dateFnsLocalizer({
@@ -87,11 +90,14 @@ const CustomCalendar = ({ setShowAddForm, handleEventSelect, ...props }) => {
     };
 
     const dayStyleGetter = (date) => {
+        if(view === 'day') return {};
         const today = new Date();
+        const dayBeingStyled = new Date(date); 
         today.setHours(0, 0, 0, 0);
-
-        const isToday = date.setHours(0, 0, 0, 0) === today.getTime();
-
+        dayBeingStyled.setHours(0, 0, 0, 0);
+    
+        const isToday = dayBeingStyled.getTime() === today.getTime();
+    
         if (isToday) {
             return {
                 style: {
@@ -122,6 +128,7 @@ const CustomCalendar = ({ setShowAddForm, handleEventSelect, ...props }) => {
 
     const calendarProps = {
         ...props,
+        culture: 'en-GB', 
         view,
         localizer,
         onNavigate: handleNavigate,
@@ -133,7 +140,7 @@ const CustomCalendar = ({ setShowAddForm, handleEventSelect, ...props }) => {
         },
         eventPropGetter: eventStyleGetter,
         dayPropGetter: dayStyleGetter,
-        slotPropGetter: slotStyleGetter,
+        // slotPropGetter: slotStyleGetter,
         onSelectEvent: event => handleEventSelect(event)
     };
 
@@ -150,8 +157,8 @@ const CustomCalendar = ({ setShowAddForm, handleEventSelect, ...props }) => {
 
     return (
         <div>
-            <ToolbarContext.Provider value={{ setShowAddForm }}>
-                <Calendar {...calendarProps} />
+            <ToolbarContext.Provider value={{ setShowAddForm }} >
+                <Calendar {...calendarProps}/>
             </ToolbarContext.Provider>
             <BottomToolbar
                 onNavigate={handleNavigate}

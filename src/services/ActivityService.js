@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { useUserContext } from '../context/AuthContext';
+
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -24,14 +26,18 @@ const convertEventDates = (event) => ({
   ...event,
   date_start: new Date(event.date_start),
   date_end: new Date(event.date_end),
+  allDay:false
 });
 
-export const fetchActivities = async () => {
+export const fetchActivities = async (userId) => {
   try {
-    const response = await api.get(`/activity/`); 
+    const response = await api.get(`/activity/`, {
+      params: { user: userId }
+    }); 
     const data = response.data.map(convertEventDates);
     return data;
   } catch (error) {
+    console.error(error);
     throw new Error("Could not fetch activities from the server.");
   }
 };
@@ -61,5 +67,45 @@ export const deleteActivity = async (id) => {
     }
   } catch (error) {
     throw new Error(`Failed to delete activity with ID ${id}`);
+  }
+}
+
+export const fetchCategories = async (userId) => {
+  try {
+    const response = await api.get(`/category/`, {
+      params: { user: userId }
+    }); 
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Could not fetch categories from the server.");
+  }
+}
+
+export const addCategory = async (category) => {
+  const response = await api.post(`/category/`, category); 
+  if (response.status !== 201) {
+    throw new Error("Failed to add category");
+  }
+  return response.data;
+};
+
+export const editCategory = async ({ id, category }) => {
+  try {
+    const response = await api.put(`/category/${id}/`, category); 
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to update category with ID ${id}`);
+  }
+}
+
+export const deleteCategory = async (id) => {
+  try {
+    const response=await api.delete(`/category/${id}/`); 
+    if(response.status!==204){
+      throw new Error("Failed to delete category");
+    }
+  } catch (error) {
+    throw new Error(`Failed to delete category with ID ${id}`);
   }
 }
