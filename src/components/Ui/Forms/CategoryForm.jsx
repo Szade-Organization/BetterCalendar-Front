@@ -1,13 +1,17 @@
-import { Formik, Form } from 'formik';
-import { FaPlus } from 'react-icons/fa';
-import * as Yup from 'yup';
-import Button from '../Buttons/Button';
-import Input from '../Inputs/Input';
-import TextArea from '../Inputs/TextArea';
-import Select from '../Inputs/Select';
-import { useUserContext } from '../../../context/AuthContext';
-import { useAddCategoryMutation, useDeleteCategoryMutation, useEditCategoryMutation } from '../../../services/Queries';
-import { useState } from 'react';
+import { Formik, Form } from "formik";
+import { FaPlus } from "react-icons/fa";
+import * as Yup from "yup";
+import Button from "../Buttons/Button";
+import Input from "../Inputs/Input";
+import TextArea from "../Inputs/TextArea";
+import Select from "../Inputs/Select";
+import { useUserContext } from "../../../context/AuthContext";
+import {
+  useAddCategoryMutation,
+  useDeleteCategoryMutation,
+  useEditCategoryMutation,
+} from "../../../services/Queries";
+import { useState } from "react";
 
 const CategoryForm = ({ categories, onClose }) => {
   const { user } = useUserContext();
@@ -18,9 +22,9 @@ const CategoryForm = ({ categories, onClose }) => {
 
   const handleReset = (resetForm) => {
     resetForm({
-      selectedCategory: '',
-      name: '',
-      description: ''
+      selectedCategory: "",
+      name: "",
+      description: "",
     });
     setIsNewCategory(true);
   };
@@ -28,14 +32,14 @@ const CategoryForm = ({ categories, onClose }) => {
   return (
     <Formik
       initialValues={{
-        selectedCategory: '',
-        name: '',
-        description: ''
+        selectedCategory: "",
+        name: "",
+        description: "",
       }}
       validationSchema={Yup.object({
         selectedCategory: Yup.string(),
-        name: Yup.string().required('Required'),
-        description: Yup.string()
+        name: Yup.string().required("Required"),
+        description: Yup.string(),
       })}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         if (values.selectedCategory && !isNewCategory) {
@@ -44,14 +48,14 @@ const CategoryForm = ({ categories, onClose }) => {
             category: {
               name: values.name,
               description: values.description,
-              user: user.id
-            }
+              user: user.id,
+            },
           });
         } else {
           addCategoryMutation.mutate({
             name: values.name,
             description: values.description,
-            user: user.id
+            user: user.id,
           });
         }
         setSubmitting(false);
@@ -59,7 +63,7 @@ const CategoryForm = ({ categories, onClose }) => {
         setIsNewCategory(false);
       }}
     >
-      {formik => {
+      {(formik) => {
         return (
           <Form>
             <div className="p-4 space-y-4">
@@ -67,20 +71,36 @@ const CategoryForm = ({ categories, onClose }) => {
                 <h1 className="text-3xl font-semibold">Manage Categories</h1>
               </div>
               <div className="flex items-center justify-center flex-row gap-x-4">
-                <Select name="selectedCategory" onChange={e => {
-                  const selectedCat = categories.find(cat => cat.id === Number(e.target.value));
-       
-                  formik.setFieldValue("selectedCategory", e.target.value);
-                  formik.setFieldValue("name", selectedCat?.name || '');
-                  formik.setFieldValue("description", selectedCat?.description || '');
-                  setIsNewCategory(false);
-                }}>
-                  <option value="">{isNewCategory ? "New Category" : "Select a category"}</option>
-                  {categories.map(category => (
-                    <option key={category.id} value={category.id}>{category.name}</option>
+                <Select
+                  name="selectedCategory"
+                  onChange={(e) => {
+                    const selectedCat = categories.find(
+                      (cat) => cat.id === Number(e.target.value)
+                    );
+
+                    formik.setFieldValue("selectedCategory", e.target.value);
+                    formik.setFieldValue("name", selectedCat?.name || "");
+                    formik.setFieldValue(
+                      "description",
+                      selectedCat?.description || ""
+                    );
+                    setIsNewCategory(false);
+                  }}
+                >
+                  <option value="">
+                    {isNewCategory ? "New Category" : "Select a category"}
+                  </option>
+                  {categories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
                   ))}
                 </Select>
-                <Button type="button" className="bg-teal-500 hover:bg-teal-700 ml-2" onClick={() => handleReset(formik.resetForm)}>
+                <Button
+                  type="button"
+                  className="bg-teal-500 hover:bg-teal-700 ml-2"
+                  onClick={() => handleReset(formik.resetForm)}
+                >
                   <FaPlus />
                 </Button>
               </div>
@@ -89,18 +109,38 @@ const CategoryForm = ({ categories, onClose }) => {
                 <Input id="name" name="name" />
               </div>
               <div className="flex items-start flex-col gap-x-4">
-                <label htmlFor="description" >Description:</label>
-                <TextArea id="description" name="description" className="w-full" />
+                <label htmlFor="description">Description:</label>
+                <TextArea
+                  id="description"
+                  name="description"
+                  className="w-full"
+                />
               </div>
-              <div className='flex justify-between gap-3'>
-                <Button onClick={() => { deleteCategoryMutation.mutate(formik.values.selectedCategory); handleReset(formik.resetForm) }} type="button" className="bg-red-500 hover:bg-red-700">
+              <div className="flex justify-between gap-3">
+                <Button
+                  onClick={() => {
+                    deleteCategoryMutation.mutate(
+                      formik.values.selectedCategory
+                    );
+                    handleReset(formik.resetForm);
+                  }}
+                  type="button"
+                  className="bg-red-500 hover:bg-red-700"
+                >
                   Delete Category
                 </Button>
                 <div className="flex justify-end gap-3">
-                  <Button onClick={onClose} type="button" className="bg-gray-500 hover:bg-gray-700">
+                  <Button
+                    onClick={onClose}
+                    type="button"
+                    className="bg-gray-500 hover:bg-gray-700"
+                  >
                     Close
                   </Button>
-                  <Button type="submit" className="bg-green-500 hover:bg-green-700">
+                  <Button
+                    type="submit"
+                    className="bg-green-500 hover:bg-green-700"
+                  >
                     Save Category
                   </Button>
                 </div>
