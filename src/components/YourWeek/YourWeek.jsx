@@ -1,6 +1,7 @@
 import CurrentTask from "./CurrentTask";
 import UpcomingTasks from "./UpcomingTasks";
 import AddTask from "./AddTask";
+import ThisWeek from "./ThisWeek";
 
 const YourWeek = () => {
   return (
@@ -12,7 +13,7 @@ const YourWeek = () => {
         </div>
         <div className="w-1/2 flex flex-col gap-4">
           <AddTask />
-          <CurrentTask />
+          <ThisWeek />
         </div>
       </div>
     </div>
