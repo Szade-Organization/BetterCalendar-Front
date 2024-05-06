@@ -39,42 +39,44 @@ const Statistics = () => {
   };
 
   return (
-    <div className="p-5 bg-white rounded-3xl min-w-full pt-16">
-      <div className="flex flex-wrap">
-        <CardStatistics
-          icon="/assets/icons/activityicon.gif"
-          number={100}
-          text="Total activities"
-        />
-        <CardStatistics
-          icon="/assets/icons/timer.gif"
-          number={168}
-          text="Total time"
-        />
-        <CardStatistics
-          icon="/assets/icons/timer.gif"
-          number={100}
-          text="Rest time"
-        />
-      </div>
-      <div className="m-10 grid grid-cols-1 sm:grid-cols-2 gap-8 items-end">
-        <div>
-          <div className="flex flex-row">
-            <div className="mb-5 text-2xl font-semibold text-gray-700">
-              Completed Activites
-            </div>
-            <div className="mx-5 mb-5 text-2xl font-semibold text-green-700">
-              75%
-            </div>
-          </div>
-          <Chart title={"Com"} type="doughnut" data={donutData} />
+    <div className="h-screen flex items-center">
+      <div className="p-5 bg-grey-background rounded-3xl min-w-full pt-16 h-[90%]">
+        <div className="flex flex-wrap ">
+          <CardStatistics
+            icon="/assets/icons/activityicon.gif"
+            number={100}
+            text="Total activities"
+          />
+          <CardStatistics
+            icon="/assets/icons/timer.gif"
+            number={168}
+            text="Total time"
+          />
+          <CardStatistics
+            icon="/assets/icons/timer.gif"
+            number={100}
+            text="Rest time"
+          />
         </div>
-        <div>
-          <div className="mb-5 text-2xl font-semibold text-gray-700">
-            Category Breakdown
+        <div className="m-6 grid grid-cols-1 sm:grid-cols-2 gap-8 items-end">
+          <div className="shadow-lg rounded-lg bg-white p-8">
+            <div className="flex flex-row">
+              <div className="mb-5 text-2xl font-semibold text-gray-700">
+                Completed Activites
+              </div>
+              <div className="mx-5 mb-5 text-2xl font-semibold text-green-700">
+                75%
+              </div>
+            </div>
+            <Chart title={"Com"} type="doughnut" data={donutData} />
           </div>
-          <div className="self-end">
-            <Chart title={"Pie chart"} type="pie" data={data} />
+          <div className="shadow-lg rounded-lg bg-white p-8">
+            <div className="mb-5 text-2xl font-semibold text-gray-700">
+              Category Breakdown
+            </div>
+            <div className="self-end">
+              <Chart title={"Pie chart"} type="pie" data={data} />
+            </div>
           </div>
         </div>
       </div>
