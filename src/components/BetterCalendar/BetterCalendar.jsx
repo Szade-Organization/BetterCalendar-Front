@@ -24,6 +24,12 @@ const BetterCalendar = () => {
   const editEventMutation = useEditEventMutation(user.id);
   const deleteEventMutation = useDeleteEventMutation(user.id);
 
+  const eventsQuery = useEventsAndCategories(user.id);
+  const addEventMutation = useAddEventMutation(user.id);
+  const editEventMutation = useEditEventMutation(user.id);
+  const deleteEventMutation = useDeleteEventMutation(user.id);  
+  
+  
   const handleAddEvent = (newEvent) => {
     addEventMutation.mutate(newEvent);
   };
@@ -38,14 +44,16 @@ const BetterCalendar = () => {
   };
 
   const handleEventSelect = (event) => {
-    setSelectedEvent(event);
+    setSelectedEvent(event);    
     setShowDetails(true);
+  
   };
 
   if (eventsQuery.isLoading) {
     return <Spinner />;
   }
 
+ 
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="p-5 bg-white rounded-3xl min-w-full max-w-xl h-[90%]">
@@ -61,6 +69,7 @@ const BetterCalendar = () => {
             }
             className="w-[90%] lg:w-3/4"
           />
+
         )}
         <CustomCalendar
           events={eventsQuery.data}
@@ -72,6 +81,7 @@ const BetterCalendar = () => {
           className="overflow-auto"
           setShowAddForm={setShowAddForm}
           handleEventSelect={handleEventSelect}
+
         />
         {showDetails && (
           <Modal
