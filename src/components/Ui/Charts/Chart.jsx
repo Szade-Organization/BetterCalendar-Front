@@ -1,33 +1,28 @@
-import { useEffect, useRef } from 'react';
-import { Chart as ChartJS } from 'chart.js/auto';
-
+import { useEffect, useRef } from "react";
+import { Chart as ChartJS } from "chart.js/auto";
 
 const Chart = ({ type, data }) => {
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
 
   useEffect(() => {
-
-
     const configPie = {
       type: type,
       data: data,
       options: {
         plugins: {
           legend: {
-            position: 'bottom'
-          }
+            position: "bottom",
+          },
         },
         responsive: true,
-        maintainAspectRatio: false
-      }
+        maintainAspectRatio: false,
+      },
     };
-
 
     if (chartInstance.current) {
       chartInstance.current.destroy();
     }
-
 
     chartInstance.current = new ChartJS(chartRef.current, configPie);
 
@@ -36,9 +31,9 @@ const Chart = ({ type, data }) => {
         chartInstance.current.destroy();
       }
     };
-  },  [type, data]);
+  }, [type, data]);
   return (
-    <div className=" shadow-lg rounded-lg overflow-hidden bg-slate-100">
+    <div className="overflow-hidden">
       <canvas className="p-1" ref={chartRef}></canvas>
     </div>
   );

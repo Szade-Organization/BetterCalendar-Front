@@ -6,20 +6,23 @@ import ActivityForm from "../Ui/Forms/ActivityForm";
 import CustomCalendar from "./CustomCalendar";
 import { Spinner } from "../Ui/Spinners/Spinner";
 import { useUserContext } from "../../context/AuthContext";
-import { useAddEventMutation, useDeleteEventMutation, useEditEventMutation, useEventsAndCategories} from "../../services/Queries";
+import {
+  useAddEventMutation,
+  useDeleteEventMutation,
+  useEditEventMutation,
+  useEventsAndCategories,
+} from "../../services/Queries";
 
 const BetterCalendar = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
-  const [showDetails, setShowDetails] = useState(false); 
-  const { user } = useUserContext(); 
-
+  const [showDetails, setShowDetails] = useState(false);
+  const { user } = useUserContext();
   const eventsQuery = useEventsAndCategories(user.id);
   const addEventMutation = useAddEventMutation(user.id);
   const editEventMutation = useEditEventMutation(user.id);
-  const deleteEventMutation = useDeleteEventMutation(user.id);  
-  
-  
+  const deleteEventMutation = useDeleteEventMutation(user.id);
+
   const handleAddEvent = (newEvent) => {
     addEventMutation.mutate(newEvent);
   };
@@ -31,22 +34,20 @@ const BetterCalendar = () => {
   const handleDeleteEvent = () => {
     deleteEventMutation.mutate(selectedEvent.id);
     setShowAddForm(false);
-  }
+  };
 
   const handleEventSelect = (event) => {
-    setSelectedEvent(event);    
+    setSelectedEvent(event);
     setShowDetails(true);
-  
   };
 
   if (eventsQuery.isLoading) {
     return <Spinner />;
   }
 
- 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="p-5 bg-white rounded-3xl w-full">
+      <div className="p-5 bg-white rounded-3xl min-w-full max-w-xl h-[90%]">
         {showAddForm && (
           <Modal
             content={
@@ -59,7 +60,6 @@ const BetterCalendar = () => {
             }
             className="w-[90%] lg:w-3/4"
           />
-
         )}
         <CustomCalendar
           events={eventsQuery.data}
@@ -71,7 +71,6 @@ const BetterCalendar = () => {
           className="overflow-auto"
           setShowAddForm={setShowAddForm}
           handleEventSelect={handleEventSelect}
-
         />
         {showDetails && (
           <Modal

@@ -7,9 +7,8 @@ import LoginPage from "./pages/_auth/LoginPage.jsx";
 import RegisterPage from "./pages/_auth/RegisterPage.jsx";
 
 function App() {
-
   return (
-    <main className="flex min-h-screen w-full bg-week-background" >
+    <main className="flex min-h-screen w-full bg-week-background">
       <Routes>
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<LoginPage />} />
@@ -17,13 +16,11 @@ function App() {
         </Route>
 
         <Route element={<RootLayout />}>
-          <Route path="/" element={< AccordionLayout/>} />         
+          <Route path="/" element={<AccordionLayout />} />
         </Route>
       </Routes>
-    </main >
-  )
-
+    </main>
+  );
 }
-
 
 export default App;
