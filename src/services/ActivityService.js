@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useUserContext } from "../context/AuthContext";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -108,5 +107,20 @@ export const deleteCategory = async (id) => {
     }
   } catch (error) {
     throw new Error(`Failed to delete category with ID ${id}`);
+  }
+};
+
+export const fetchActivitiesByState = async (state, count) => {
+  try {
+    const response = await api.get('/get-activity/', {
+      params: {
+        state: state,
+        count: count
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Could not fetch categories from the server.");
   }
 };

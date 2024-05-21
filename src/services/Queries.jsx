@@ -9,6 +9,7 @@ import {
   deleteCategory,
   editCategory,
   fetchCategories,
+  fetchActivitiesByState,
 } from "./ActivityService";
 import Toast, { ToastType } from "../components/Ui/Toast/Toast";
 import { toast } from "react-toastify";
@@ -88,6 +89,7 @@ export function useAddEventMutation(userId) {
     },
     onSettled: () => {
       queryClient.invalidateQueries(["events", userId]);
+      queryClient.invalidateQueries(["eventsByState"]);
     },
   });
 }
@@ -114,6 +116,7 @@ export function useEditEventMutation(userId) {
     },
     onSettled: () => {
       queryClient.invalidateQueries(["events", userId]);
+      queryClient.invalidateQueries(["eventsByState"]);
     },
   });
 }
@@ -123,6 +126,7 @@ export function useDeleteEventMutation(userId) {
   return useMutation(deleteActivity, {
     onMutate: async (eventId) => {
       await queryClient.cancelQueries(["events", userId]);
+      await queryClient.cancelQueries(["currentActivities"]);
       const previousEvents = queryClient.getQueryData(["events", userId]);
       queryClient.setQueryData(
         ["events", userId],
@@ -138,6 +142,19 @@ export function useDeleteEventMutation(userId) {
     },
     onSettled: () => {
       queryClient.invalidateQueries(["events", userId]);
+      queryClient.invalidateQueries(["eventsByState"]);
+    },
+  });
+}
+
+export function useGetEventsByState(state, count) {
+  return useQuery({
+    queryKey: ["eventsByState", state, count],
+    queryFn: () => fetchActivitiesByState(state, count),
+    onError: () => {
+      toast(
+        <Toast type={ToastType.ERROR} message="Couldn't load activities" />
+      );
     },
   });
 }

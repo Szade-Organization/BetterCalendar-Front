@@ -12,20 +12,16 @@ import {
   useEditEventMutation,
   useEventsAndCategories,
 } from "../../services/Queries";
+import { useAddActivityModal } from "../../context/AddActivityModalContext";
 
 const BetterCalendar = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [showAddForm, setShowAddForm] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const { user } = useUserContext();
   const eventsQuery = useEventsAndCategories(user.id);
-  const addEventMutation = useAddEventMutation(user.id);
   const editEventMutation = useEditEventMutation(user.id);
   const deleteEventMutation = useDeleteEventMutation(user.id);
-
-  const handleAddEvent = (newEvent) => {
-    addEventMutation.mutate(newEvent);
-  };
+  const { setShowAddActivityModal } = useAddActivityModal();
 
   const handleEditEvent = (eventId, updatedEvent) => {
     editEventMutation.mutate({ id: eventId, activity: updatedEvent });
@@ -33,7 +29,7 @@ const BetterCalendar = () => {
 
   const handleDeleteEvent = () => {
     deleteEventMutation.mutate(selectedEvent.id);
-    setShowAddForm(false);
+    setShowDetails(false);
   };
 
   const handleEventSelect = (event) => {
@@ -47,20 +43,8 @@ const BetterCalendar = () => {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="p-5 bg-white rounded-3xl min-w-full max-w-xl h-[90%]">
-        {showAddForm && (
-          <Modal
-            content={
-              <ActivityForm
-                onClose={() => setShowAddForm(false)}
-                title={"New activity"}
-                handleAddEvent={handleAddEvent}
-                categories={eventsQuery.categories}
-              />
-            }
-            className="w-[90%] lg:w-3/4"
-          />
-        )}
+      <div className="p-5 bg-white rounded-3xl min-w-full max-w-xl h-[95%]">
+
         <CustomCalendar
           events={eventsQuery.data}
           titleAccessor="name"
@@ -69,7 +53,7 @@ const BetterCalendar = () => {
           allDayAccessor="allDay"
           style={{ height: 600, margin: 20 }}
           className="overflow-auto"
-          setShowAddForm={setShowAddForm}
+          setShowAddForm={setShowAddActivityModal}
           handleEventSelect={handleEventSelect}
         />
         {showDetails && (

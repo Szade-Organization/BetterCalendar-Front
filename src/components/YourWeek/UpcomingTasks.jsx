@@ -1,26 +1,61 @@
+import { useState, useEffect } from 'react';
+import { colors } from "../../consts/contsts";
+import { useGetEventsByState } from "../../services/Queries";
+import { Spinner } from "../Ui/Spinners/Spinner";
+import { calculateRemainingTime } from '../../utils/utils';
+
+const getRandomColor = () => {
+  return colors[Math.floor(Math.random() * colors.length)];
+};
+
 const UpcomingTasks = () => {
+  const upcomingTasksQuery = useGetEventsByState('next', 3);
+  const [tasksWithColors, setTasksWithColors] = useState([]);
+
+  useEffect(() => {
+    if (upcomingTasksQuery.isSuccess) {
+      const upcomingTasks = upcomingTasksQuery.data.next;
+      const tasksWithColors = upcomingTasks.map(task => ({
+        ...task,
+        color: getRandomColor(),
+        remainingTime: calculateRemainingTime(task.date_start)
+      }));
+      setTasksWithColors(tasksWithColors);
+
+      const intervalId = setInterval(() => {
+        setTasksWithColors(prevTasks => prevTasks.map(task => ({
+          ...task,
+          remainingTime: calculateRemainingTime(task.date_start)
+        })));
+      }, 1000);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [upcomingTasksQuery.isSuccess, upcomingTasksQuery.data]);
+
+  if (upcomingTasksQuery.isLoading) {
+    return <Spinner />;
+  }
+
   return (
-    <div className="w-full p-10 rounded-3xl bg-white shadow-lg grow">
+    <div className="w-full p-2 lg:p-4 rounded-3xl bg-white shadow-xl grow">
       <div className="flex justify-between flex-col gap-4">
-        <div className="flex flex-start text-3xl font-extrabold text-black max-h-8">
+        <div className="flex flex-start text-md lg:text-2xl font-extrabold text-black max-h-8">
           Upcoming
         </div>
-        <div className="bg-red-500 flex flex-col justify-around gap-4 p-5 rounded-3xl">
-          <div className="flex w-full justify-between text-white">
-            <div className="text-inherit font-extrabold text-2xl w-48">
-              Ryan Gosling Marathon:
+        {tasksWithColors && tasksWithColors.map((task) => (
+          <div key={task.id} className={`${task.color} flex p-4 rounded-3xl`}>
+            <div className="flex w-full text-white">
+              <div className="flex-grow text-inherit font-extrabold text-sm lg:text-xl">
+                {task.name}:
+              </div>
+              <div className="text-inherit font-extrabold text-sm lg:text-xl">
+                {task.remainingTime}
+              </div>
             </div>
-            <div className="text-inherit font-extrabold text-2xl">2:33</div>
           </div>
-        </div>
-        <div className="bg-green-500 flex flex-col justify-around gap-4 p-5 rounded-3xl">
-          <div className="flex w-full justify-between text-white">
-            <div className="text-inherit font-extrabold text-2xl">
-              Studying:
-            </div>
-            <div className="text-inherit font-extrabold text-2xl">2:33</div>
-          </div>
-        </div>
+        ))}
+
       </div>
     </div>
   );
