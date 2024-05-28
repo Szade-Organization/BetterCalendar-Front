@@ -8,9 +8,7 @@ import YourWeek from "../../components/YourWeek/YourWeek";
 const AccordionLayout = () => {
   const [activeSection, setActiveSection] = useState(null);
 
-  const toggleAccordion = (index) => {
-    setActiveSection(index);
-  };
+    
 
   const sections = [
     {
@@ -50,7 +48,7 @@ const AccordionLayout = () => {
               index + 1
             } ${activeSection === index ? "active" : ""}`}
             style={{ background: section.color }}
-            onClick={() => toggleAccordion(index)}
+            onClick={() => setActiveSection(index)}
           >
             <div className="section-title flex items-center justify-center m-5 p-0 text-center text-black font-Arial text-2xl max-w-25">
               <h2 className="m-auto transform -rotate-90 whitespace-nowrap text-4xl font-bold">
