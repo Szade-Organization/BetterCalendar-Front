@@ -1,24 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import CurrentTask from "./CurrentTask";
 import UpcomingTasks from "./UpcomingTasks";
 import AddTask from "./AddTask";
 import ThisWeek from "./ThisWeek";
 import { Spinner } from "../Ui/Spinners/Spinner";
-import { useGetEventsByState } from '../../services/Queries';
-import { calculateProgress, calculateRemainingTime } from '../../utils/utils';
+import { useGetEventsByState } from "../../services/Queries";
+import { calculateProgress, calculateRemainingTime } from "../../utils/utils";
 
 const YourWeek = () => {
-  const currentTaskQuery = useGetEventsByState('current', 1);
+  const currentTaskQuery = useGetEventsByState("current", 1);
   const [remainingTime, setRemainingTime] = useState("");
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     if (currentTaskQuery.isSuccess) {
-      const currentTask = currentTaskQuery.data.current[0];
+      const currentTask = currentTaskQuery?.data?.current[0];
 
       const updateRemainingTimeAndProgress = () => {
-        setRemainingTime(calculateRemainingTime(currentTask.date_end));
-        setProgress(calculateProgress(currentTask.date_start, currentTask.date_end));
+        setRemainingTime(calculateRemainingTime(currentTask?.date_end));
+        setProgress(
+          calculateProgress(currentTask?.date_start, currentTask?.date_end)
+        );
       };
 
       updateRemainingTimeAndProgress();
@@ -35,7 +37,11 @@ const YourWeek = () => {
           {currentTaskQuery.isLoading ? (
             <Spinner />
           ) : (
-            <CurrentTask name={currentTaskQuery.data.current[0].name} time={remainingTime} progress={progress} />
+            <CurrentTask
+              name={currentTaskQuery?.data?.current[0]?.name}
+              time={remainingTime}
+              progress={progress}
+            />
           )}
           <UpcomingTasks />
         </div>

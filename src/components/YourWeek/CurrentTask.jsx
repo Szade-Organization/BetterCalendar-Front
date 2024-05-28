@@ -9,11 +9,20 @@ const CurrentTask = ({ name, time, progress }) => {
         </div>
 
         <div className="bg-violet-800 flex flex-col justify-around gap-4 p-5 rounded-3xl">
-          <ProgressBar progress={progress} />
-          <div className="flex w-full justify-between text-white text-sm lg:text-xl">
-            <div className="text-inherit font-extrabold ">{name}:</div>
-            <div className="text-inherit font-extrabold ">{time}</div>
-          </div>
+          {time !== "NaNd NaNh NaNm NaNs" && time !== "" && (
+            <div>
+              <ProgressBar progress={progress} />
+              <div className="flex w-full justify-between text-white text-sm lg:text-xl">
+                <div className="text-inherit font-extrabold ">{name}:</div>
+                <div className="text-inherit font-extrabold ">{time}</div>
+              </div>
+            </div>
+          )}
+          {(time === "" || time === "NaNd NaNh NaNm NaNs") && (
+            <div className="flex w-full justify-between text-white text-sm lg:text-xl font-extrabold">
+              <p>No current task</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
