@@ -10,8 +10,8 @@ export const initialUser = {
 
 const INITIAL_STATE = {
   user: initialUser,
-  login: () => {},
-  logout: () => {},
+  login: () => { },
+  logout: () => { },
   isAuthenticated: false,
   isLoading: false,
 };
@@ -37,6 +37,9 @@ export function AuthProvider({ children }) {
       } finally {
         setIsLoading(false);
       }
+    } else {
+      setIsLoading(false);
+      setIsAuthenticated(false);
     }
   };
 
