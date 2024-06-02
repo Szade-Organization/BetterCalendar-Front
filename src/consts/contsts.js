@@ -1,17 +1,12 @@
-export const colors = [
-    "bg-red-500",
-    "bg-green-500",
-    "bg-blue-500",
-    "bg-yellow-500",
-    "bg-purple-500",
-    "bg-pink-500",
-    "bg-indigo-500",
-    "bg-teal-500",
-    "bg-orange-500",
-    "bg-lime-500",
-    "bg-cyan-500",
-    "bg-amber-500",
-    "bg-violet-500",
-    "bg-rose-500",
-    "bg-fuchsia-500"
-  ];
+export const colors = {
+  "week-background": "bg-week-background",
+  "activities-background": "bg-activities-background",
+  "statistics-background": "bg-statistics-background",
+  "planner-background": "bg-planner-background",
+  "settings-background": "bg-settings-background", 
+  "light-yellow": "bg-light-yellow",
+  "lime-green": "bg-lime-green",
+  "light-purple": "bg-light-purple",
+  "light-orange": "bg-light-orange",
+  "light-red": "bg-light-red",
+};

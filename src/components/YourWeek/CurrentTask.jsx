@@ -8,7 +8,7 @@ const CurrentTask = ({ name, time, progress }) => {
           In progress
         </div>
 
-        <div className="bg-violet-800 flex flex-col justify-around gap-4 p-5 rounded-3xl">
+        <div className="bg-violet-500 flex flex-col justify-around gap-4 p-5 rounded-3xl">
           {time !== "NaNd NaNh NaNm NaNs" && time !== "" && (
             <div>
               <ProgressBar progress={progress} />

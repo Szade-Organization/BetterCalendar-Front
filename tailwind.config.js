@@ -13,6 +13,11 @@ export default {
         "vivid-green": "#12F55D",
         "sea-green": "#079BA5",
         "war-blue": "#1320AC",
+        "light-yellow": "#D2EE4A",
+        "lime-green": "#D2EE7D",
+        "light-purple": "#9071A8",
+        "light-orange": "#DD8459",
+        "light-red": "#AB616E"
       },
     },
   },

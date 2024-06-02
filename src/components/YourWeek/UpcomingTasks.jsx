@@ -4,24 +4,31 @@ import { useGetEventsByState } from "../../services/Queries";
 import { Spinner } from "../Ui/Spinners/Spinner";
 import { calculateRemainingTime } from "../../utils/utils";
 
-const getRandomColor = () => {
-  return colors[Math.floor(Math.random() * colors.length)];
+const getRandomColor = (usedColors) => {
+  const colorKeys = Object.keys(colors).filter(color => !usedColors.includes(color));
+  if (colorKeys.length === 0) return null;  // Return null if no more unique colors available
+  return colorKeys[Math.floor(Math.random() * colorKeys.length)];
 };
 
 const UpcomingTasks = () => {
-  const upcomingTasksQuery = useGetEventsByState("next", 3);
+  const upcomingTasksQuery = useGetEventsByState("next", 6);
   const [tasksWithColors, setTasksWithColors] = useState([]);
 
   useEffect(() => {
     if (upcomingTasksQuery.isSuccess) {
+      const usedColors = [];
       const upcomingTasks = upcomingTasksQuery.data.next;
-      const tasksWithColors = upcomingTasks.map((task) => ({
-        ...task,
-        color: getRandomColor(),
-        remainingTime: calculateRemainingTime(task.date_start),
-      }));
+      const tasksWithColors = upcomingTasks.map((task) => {
+        const color = getRandomColor(usedColors);
+        if (color) usedColors.push(color);  // Ensure the color is only used once
+        return {
+          ...task,
+          color: color,
+          remainingTime: calculateRemainingTime(task.date_start),
+        };
+      });
       setTasksWithColors(tasksWithColors);
-
+      
       const intervalId = setInterval(() => {
         setTasksWithColors((prevTasks) =>
           prevTasks.map((task) => ({
@@ -47,12 +54,12 @@ const UpcomingTasks = () => {
         </div>
         {tasksWithColors &&
           tasksWithColors.map((task) => (
-            <div key={task.id} className={`${task.color} flex p-4 rounded-3xl`}>
-              <div className="flex w-full text-white">
-                <div className="flex-grow text-inherit font-extrabold text-sm lg:text-xl text-start pl-2">
-                  {task.name}:
+            <div key={task.id} className={`${colors[task.color] || 'bg-gray-200'} flex p-4 rounded-3xl`}>
+              <div className="flex w-full text-black text-md lg:text-xl font-extrabold">
+                <div className="flex-grow text-inherit text-start pl-2">
+                  {task.name}
                 </div>
-                <div className="text-inherit font-extrabold text-sm lg:text-xl">
+                <div className="text-inherit">
                   {task.remainingTime}
                 </div>
               </div>

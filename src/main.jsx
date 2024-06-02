@@ -7,7 +7,7 @@ import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { BrowserRouter } from "react-router-dom";
-import { AddActivityModalProvider } from "./context/AddActivityModalContext.jsx";
+
 
 
 const queryClient = new QueryClient();
@@ -17,10 +17,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <AddActivityModalProvider>
-            <ToastContainer position="bottom-right" />
-            <App />
-          </AddActivityModalProvider>
+          <ToastContainer position="bottom-right" />
+          <App />
         </AuthProvider>
       </QueryClientProvider>
     </BrowserRouter>
