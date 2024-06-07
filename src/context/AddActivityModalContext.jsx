@@ -9,9 +9,8 @@ const AddActivityModalContext = createContext();
 
 export const AddActivityModalProvider = ({ children }) => {
   const [showAddActivityModal, setShowAddActivityModal] = useState(false);
-  const { user } = useUserContext();
   const categoriesQuery = useCategoriesQuery();
-  const addEventMutation = useAddEventMutation(user.id);
+  const addEventMutation = useAddEventMutation();
 
 
   const handleAddEvent = (newEvent) => {

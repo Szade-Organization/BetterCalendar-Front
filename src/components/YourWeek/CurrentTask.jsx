@@ -9,7 +9,7 @@ const CurrentTask = ({ name, time, progress }) => {
         </div>
 
         <div className="bg-violet-500 flex flex-col justify-around gap-4 p-5 rounded-3xl">
-          {time !== "NaNd NaNh NaNm NaNs" && time !== "" && (
+          {name && (
             <div>
               <ProgressBar progress={progress} />
               <div className="flex w-full justify-between text-white text-sm lg:text-xl">
@@ -18,7 +18,7 @@ const CurrentTask = ({ name, time, progress }) => {
               </div>
             </div>
           )}
-          {(time === "" || time === "NaNd NaNh NaNm NaNs") && (
+          {!name && (
             <div className="flex w-full justify-between text-white text-sm lg:text-xl font-extrabold">
               <p>No current task</p>
             </div>

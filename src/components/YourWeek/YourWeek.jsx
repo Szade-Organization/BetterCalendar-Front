@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import CurrentTask from "./CurrentTask";
 import UpcomingTasks from "./UpcomingTasks";
 import AddTask from "./AddTask";
-import ThisWeek from "./ThisWeek";
 import { Spinner } from "../Ui/Spinners/Spinner";
 import { useGetEventsByState } from "../../services/Queries";
 import { calculateProgress, calculateRemainingTime } from "../../utils/utils";

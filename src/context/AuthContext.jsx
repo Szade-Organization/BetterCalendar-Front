@@ -8,15 +8,7 @@ export const initialUser = {
   email: "",
 };
 
-const INITIAL_STATE = {
-  user: initialUser,
-  login: () => { },
-  logout: () => { },
-  isAuthenticated: false,
-  isLoading: false,
-};
-
-const AuthContext = createContext(INITIAL_STATE);
+const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const navigate = useNavigate();
@@ -30,6 +22,7 @@ export function AuthProvider({ children }) {
       setIsLoading(true);
       try {
         const data = await getUser();
+        
         setUser(data);
         setIsAuthenticated(true);
       } catch (error) {
@@ -47,10 +40,9 @@ export function AuthProvider({ children }) {
     checkAuth();
   }, []);
 
-  const login = (userData) => {
-    setUser(userData.user);
+  const login = async (userData) => {
     localStorage.setItem("jwt", userData.token);
-    setIsAuthenticated(true);
+    await checkAuth();
     navigate("/");
   };
 

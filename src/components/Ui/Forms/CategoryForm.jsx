@@ -8,16 +8,18 @@ import Select from "../Inputs/Select";
 import { useUserContext } from "../../../context/AuthContext";
 import {
   useAddCategoryMutation,
+  useCategoriesQuery,
   useDeleteCategoryMutation,
   useEditCategoryMutation,
 } from "../../../services/Queries";
 import { useState } from "react";
 
-const CategoryForm = ({ categories, onClose }) => {
+const CategoryForm = ({ onClose }) => {
   const { user } = useUserContext();
-  const addCategoryMutation = useAddCategoryMutation(user.id);
-  const editCategoryMutation = useEditCategoryMutation(user.id);
-  const deleteCategoryMutation = useDeleteCategoryMutation(user.id);
+  const categoriesQuery= useCategoriesQuery();
+  const addCategoryMutation = useAddCategoryMutation();
+  const editCategoryMutation = useEditCategoryMutation();
+  const deleteCategoryMutation = useDeleteCategoryMutation();
   const [isNewCategory, setIsNewCategory] = useState(false);
 
   const handleReset = (resetForm) => {
@@ -74,7 +76,7 @@ const CategoryForm = ({ categories, onClose }) => {
                 <Select
                   name="selectedCategory"
                   onChange={(e) => {
-                    const selectedCat = categories.find(
+                    const selectedCat = categoriesQuery.data.find(
                       (cat) => cat.id === Number(e.target.value)
                     );
 
@@ -90,7 +92,7 @@ const CategoryForm = ({ categories, onClose }) => {
                   <option value="">
                     {isNewCategory ? "New Category" : "Select a category"}
                   </option>
-                  {categories.map((category) => (
+                  {categoriesQuery.data.map((category) => (
                     <option key={category.id} value={category.id}>
                       {category.name}
                     </option>

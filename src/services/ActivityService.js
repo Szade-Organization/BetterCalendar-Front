@@ -29,11 +29,9 @@ const convertEventDates = (event) => ({
   allDay: false,
 });
 
-export const fetchActivities = async (userId) => {
+export const fetchActivities = async () => {
   try {
-    const response = await api.get(`/activity/`, {
-      params: { user: userId },
-    });
+    const response = await api.get(`/activity/`);
     const data = response.data.map(convertEventDates);
     return data;
   } catch (error) {
@@ -70,11 +68,9 @@ export const deleteActivity = async (id) => {
   }
 };
 
-export const fetchCategories = async (userId) => {
+export const fetchCategories = async () => {
   try {
-    const response = await api.get(`/category/`, {
-      params: { user: userId },
-    });
+    const response = await api.get(`/category/`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -121,6 +117,6 @@ export const fetchActivitiesByState = async (state, count) => {
     return response.data;
   } catch (error) {
     console.error(error);
-    throw new Error("Could not fetch categories from the server.");
+    throw new Error("Could not fetch activities by state from the server.");
   }
 };
