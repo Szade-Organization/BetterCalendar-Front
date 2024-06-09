@@ -35,7 +35,7 @@ const LoginPage = () => {
           try {
             const data = await loginMutation.mutateAsync(values);
 
-            login(data);
+            await login(data);
           } catch (error) {
             const errorMsg =
               error.body?.non_field_errors?.join(", ") ||

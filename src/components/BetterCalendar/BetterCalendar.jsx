@@ -5,9 +5,7 @@ import Modal from "../Ui/Modals/Modal";
 import ActivityForm from "../Ui/Forms/ActivityForm";
 import CustomCalendar from "./CustomCalendar";
 import { Spinner } from "../Ui/Spinners/Spinner";
-import { useUserContext } from "../../context/AuthContext";
-import {
-  useAddEventMutation,
+import {  
   useDeleteEventMutation,
   useEditEventMutation,
   useEventsAndCategories,
@@ -17,10 +15,9 @@ import { useAddActivityModal } from "../../context/AddActivityModalContext";
 const BetterCalendar = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
-  const { user } = useUserContext();
-  const eventsQuery = useEventsAndCategories(user.id);
-  const editEventMutation = useEditEventMutation(user.id);
-  const deleteEventMutation = useDeleteEventMutation(user.id);
+  const eventsQuery = useEventsAndCategories();
+  const editEventMutation = useEditEventMutation();
+  const deleteEventMutation = useDeleteEventMutation();
   const { setShowAddActivityModal } = useAddActivityModal();
 
   const handleEditEvent = (eventId, updatedEvent) => {

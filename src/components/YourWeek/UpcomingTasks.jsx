@@ -6,7 +6,7 @@ import { calculateRemainingTime } from "../../utils/utils";
 
 const getRandomColor = (usedColors) => {
   const colorKeys = Object.keys(colors).filter(color => !usedColors.includes(color));
-  if (colorKeys.length === 0) return null;  // Return null if no more unique colors available
+  if (colorKeys.length === 0) return null;  
   return colorKeys[Math.floor(Math.random() * colorKeys.length)];
 };
 
@@ -20,7 +20,7 @@ const UpcomingTasks = () => {
       const upcomingTasks = upcomingTasksQuery.data.next;
       const tasksWithColors = upcomingTasks.map((task) => {
         const color = getRandomColor(usedColors);
-        if (color) usedColors.push(color);  // Ensure the color is only used once
+        if (color) usedColors.push(color); 
         return {
           ...task,
           color: color,
@@ -55,12 +55,12 @@ const UpcomingTasks = () => {
         {tasksWithColors &&
           tasksWithColors.map((task) => (
             <div key={task.id} className={`${colors[task.color] || 'bg-gray-200'} flex p-4 rounded-3xl`}>
-              <div className="flex w-full text-black text-md lg:text-xl font-extrabold">
-                <div className="flex-grow text-inherit text-start pl-2">
+              <div className="flex w-full text-black text-md lg:text-xl font-extrabold px-6">
+                <div className="flex-grow text-inherit text-start">
                   {task.name}
                 </div>
                 <div className="text-inherit">
-                  {task.remainingTime}
+                  starts in: {task.remainingTime}
                 </div>
               </div>
             </div>

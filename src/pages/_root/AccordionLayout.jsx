@@ -28,7 +28,7 @@ const AccordionLayout = () => {
     },
     {
       title: "AI Planner",
-      content: "AI planner contents here",
+      content: "This functionality is in the throes of refinement and will be accessible imminently.",
       color: "#329D9C",
     },
     {

@@ -14,12 +14,15 @@ import {
 import Toast, { ToastType } from "../components/Ui/Toast/Toast";
 import { toast } from "react-toastify";
 import { useMemo } from "react";
+import { queryKeys } from "./QueryKeys";
+
+
 
 // EVENT QUERIES
-export function useEventsAndCategories(userId) {
+export function useEventsAndCategories() {
   const eventsQuery = useQuery({
-    queryKey: ["events", userId],
-    queryFn: () => fetchActivities(userId),
+    queryKey: [queryKeys.EVENTS],
+    queryFn: fetchActivities,
     onError: () => {
       toast(
         <Toast type={ToastType.ERROR} message="Couldn't load activities" />
@@ -28,11 +31,11 @@ export function useEventsAndCategories(userId) {
   });
 
   const categoriesQuery = useQuery({
-    queryKey: ["categories", userId],
-    queryFn: () => fetchCategories(userId),
+    queryKey: [queryKeys.CATEGORIES],
+    queryFn: fetchCategories,
     onError: () => {
       toast(
-        <Toast type={ToastType.ERROR} message="Couldn't load activities" />
+        <Toast type={ToastType.ERROR} message="Couldn't load categories" />
       );
     },
   });
@@ -59,10 +62,10 @@ export function useEventsAndCategories(userId) {
   };
 }
 
-export function useEventsQuery(userId) {
+export function useEventsQuery() {
   return useQuery({
-    queryKey: ["events", userId],
-    queryFn: () => fetchActivities(userId),
+    queryKey: [queryKeys.EVENTS],
+    queryFn: fetchActivities,
     onError: () => {
       toast(
         <Toast type={ToastType.ERROR} message="Couldn't load activities" />
@@ -71,36 +74,36 @@ export function useEventsQuery(userId) {
   });
 }
 
-export function useAddEventMutation(userId) {
+export function useAddEventMutation() {
   const queryClient = useQueryClient();
   return useMutation(addActivity, {
     onMutate: async (newEvent) => {
-      await queryClient.cancelQueries(["events", userId]);
-      const previousEvents = queryClient.getQueryData(["events"]);
-      queryClient.setQueryData(["events", userId], (old) => [...old, newEvent]);
+      await queryClient.cancelQueries([queryKeys.EVENTS]);
+      const previousEvents = queryClient.getQueryData([queryKeys.EVENTS]);
+      queryClient.setQueryData([queryKeys.EVENTS], (old) => [...old, newEvent]);
 
       return { previousEvents };
     },
     onError: (err, newEvent, context) => {
-      queryClient.setQueryData(["events", userId], context.previousEvents);
+      queryClient.setQueryData([queryKeys.EVENTS], context.previousEvents);
       toast(
         <Toast type={ToastType.ERROR} message="Error when adding activity" />
       );
     },
     onSettled: () => {
-      queryClient.invalidateQueries(["events", userId]);
-      queryClient.invalidateQueries(["eventsByState"]);
+      queryClient.invalidateQueries([queryKeys.EVENTS]);
+      queryClient.invalidateQueries([queryKeys.EVENTS_BY_STATE]);
     },
   });
 }
 
-export function useEditEventMutation(userId) {
+export function useEditEventMutation() {
   const queryClient = useQueryClient();
   return useMutation(editActivity, {
     onMutate: async ({ id, activity }) => {
-      await queryClient.cancelQueries(["events", userId]);
-      const previousEvents = queryClient.getQueryData(["events", userId]);
-      queryClient.setQueryData(["events", userId], (old) =>
+      await queryClient.cancelQueries([queryKeys.EVENTS]);
+      const previousEvents = queryClient.getQueryData([queryKeys.EVENTS]);
+      queryClient.setQueryData([queryKeys.EVENTS], (old) =>
         old.map((event) =>
           event.id === id ? { ...event, ...activity } : event
         )
@@ -109,47 +112,47 @@ export function useEditEventMutation(userId) {
       return { previousEvents };
     },
     onError: (err, { id, activity }, context) => {
-      queryClient.setQueryData(["events", userId], context.previousEvents);
+      queryClient.setQueryData([queryKeys.EVENTS], context.previousEvents);
       toast(
         <Toast type={ToastType.ERROR} message="Error when updating activity" />
       );
     },
     onSettled: () => {
-      queryClient.invalidateQueries(["events", userId]);
-      queryClient.invalidateQueries(["eventsByState"]);
+      queryClient.invalidateQueries([queryKeys.EVENTS]);
+      queryClient.invalidateQueries([queryKeys.EVENTS_BY_STATE]);
     },
   });
 }
 
-export function useDeleteEventMutation(userId) {
+export function useDeleteEventMutation() {
   const queryClient = useQueryClient();
   return useMutation(deleteActivity, {
     onMutate: async (eventId) => {
-      await queryClient.cancelQueries(["events", userId]);
-      await queryClient.cancelQueries(["currentActivities"]);
-      const previousEvents = queryClient.getQueryData(["events", userId]);
+      await queryClient.cancelQueries([queryKeys.EVENTS]);
+      await queryClient.cancelQueries([queryKeys.CURRENT_ACTIVITIES]);
+      const previousEvents = queryClient.getQueryData([queryKeys.EVENTS]);
       queryClient.setQueryData(
-        ["events", userId],
+        [queryKeys.EVENTS],
         previousEvents.filter((event) => event.id !== eventId)
       );
       return { previousEvents };
     },
     onError: (err, eventId, context) => {
-      queryClient.setQueryData(["events", userId], context.previousEvents);
+      queryClient.setQueryData([queryKeys.EVENTS], context.previousEvents);
       toast(
         <Toast type={ToastType.ERROR} message="Error when deleting activity" />
       );
     },
     onSettled: () => {
-      queryClient.invalidateQueries(["events", userId]);
-      queryClient.invalidateQueries(["eventsByState"]);
+      queryClient.invalidateQueries([queryKeys.EVENTS]);
+      queryClient.invalidateQueries([queryKeys.EVENTS_BY_STATE]);
     },
   });
 }
 
 export function useGetEventsByState(state, count) {
   return useQuery({
-    queryKey: ["eventsByState", state, count],
+    queryKey: [queryKeys.EVENTS_BY_STATE, state, count],
     queryFn: () => fetchActivitiesByState(state, count),
     onError: () => {
       toast(
@@ -160,10 +163,10 @@ export function useGetEventsByState(state, count) {
 }
 
 // CATEGORY QUERIES
-export function useCategoriesQuery(userId) {
+export function useCategoriesQuery() {
   return useQuery({
-    queryKey: ["categories", userId],
-    queryFn: () => fetchCategories(userId),
+    queryKey: [queryKeys.CATEGORIES],
+    queryFn: fetchCategories,
     onError: () => {
       toast(
         <Toast type={ToastType.ERROR} message="Couldn't load categories" />
@@ -172,16 +175,13 @@ export function useCategoriesQuery(userId) {
   });
 }
 
-export function useAddCategoryMutation(userId) {
+export function useAddCategoryMutation() {
   const queryClient = useQueryClient();
   return useMutation(addCategory, {
     onMutate: async (newCategory) => {
-      await queryClient.cancelQueries(["categories", userId]);
-      const previousCategories = queryClient.getQueryData([
-        "categories",
-        userId,
-      ]);
-      queryClient.setQueryData(["categories", userId], (old) => [
+      await queryClient.cancelQueries([queryKeys.CATEGORIES]);
+      const previousCategories = queryClient.getQueryData([queryKeys.CATEGORIES]);
+      queryClient.setQueryData([queryKeys.CATEGORIES], (old) => [
         ...old,
         newCategory,
       ]);
@@ -189,7 +189,7 @@ export function useAddCategoryMutation(userId) {
     },
     onError: (err, newCategory, context) => {
       queryClient.setQueryData(
-        ["categories", userId],
+        [queryKeys.CATEGORIES],
         context.previousCategories
       );
       toast(
@@ -197,28 +197,25 @@ export function useAddCategoryMutation(userId) {
       );
     },
     onSettled: () => {
-      queryClient.invalidateQueries(["categories", userId]);
+      queryClient.invalidateQueries([queryKeys.CATEGORIES]);
     },
   });
 }
 
-export function useEditCategoryMutation(userId) {
+export function useEditCategoryMutation() {
   const queryClient = useQueryClient();
   return useMutation(editCategory, {
     onMutate: async ({ id, category }) => {
-      await queryClient.cancelQueries(["categories", userId]);
-      const previousCategories = queryClient.getQueryData([
-        "categories",
-        userId,
-      ]);
-      queryClient.setQueryData(["categories", userId], (old) =>
+      await queryClient.cancelQueries([queryKeys.CATEGORIES]);
+      const previousCategories = queryClient.getQueryData([queryKeys.CATEGORIES]);
+      queryClient.setQueryData([queryKeys.CATEGORIES], (old) =>
         old.map((cat) => (cat.id === id ? { ...cat, ...category } : cat))
       );
       return { previousCategories };
     },
     onError: (err, { id, category }, context) => {
       queryClient.setQueryData(
-        ["categories", userId],
+        [queryKeys.CATEGORIES],
         context.previousCategories
       );
       toast(
@@ -226,29 +223,26 @@ export function useEditCategoryMutation(userId) {
       );
     },
     onSettled: () => {
-      queryClient.invalidateQueries(["categories", userId]);
+      queryClient.invalidateQueries([queryKeys.CATEGORIES]);
     },
   });
 }
 
-export function useDeleteCategoryMutation(userId) {
+export function useDeleteCategoryMutation() {
   const queryClient = useQueryClient();
   return useMutation(deleteCategory, {
     onMutate: async (categoryId) => {
-      await queryClient.cancelQueries(["categories", userId]);
-      const previousCategories = queryClient.getQueryData([
-        "categories",
-        userId,
-      ]);
+      await queryClient.cancelQueries([queryKeys.CATEGORIES]);
+      const previousCategories = queryClient.getQueryData([queryKeys.CATEGORIES]);
       queryClient.setQueryData(
-        ["categories", userId],
+        [queryKeys.CATEGORIES],
         previousCategories.filter((cat) => cat.id !== categoryId)
       );
       return { previousCategories };
     },
     onError: (err, categoryId, context) => {
       queryClient.setQueryData(
-        ["categories", userId],
+        [queryKeys.CATEGORIES],
         context.previousCategories
       );
       toast(
@@ -256,7 +250,7 @@ export function useDeleteCategoryMutation(userId) {
       );
     },
     onSettled: () => {
-      queryClient.invalidateQueries(["categories", userId]);
+      queryClient.invalidateQueries([queryKeys.CATEGORIES]);
     },
   });
 }

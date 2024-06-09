@@ -22,7 +22,6 @@ const ActivityForm = ({
   categories,
 }) => {
   const { user } = useUserContext();
-
   const startDatePickerRef = useRef(null);
   const endDatePickerRef = useRef(null);
   const [showManageCategories, setShowManageCategories] = useState(false);
@@ -82,9 +81,7 @@ const ActivityForm = ({
         <Modal
           content={
             <CategoryForm
-              onClose={() => setShowManageCategories(false)}
-              handleAddEvent={handleAddEvent}
-              categories={categories}
+              onClose={() => setShowManageCategories(false)}                      
             />
           }
           className="w-[90%] lg:w-3/4"

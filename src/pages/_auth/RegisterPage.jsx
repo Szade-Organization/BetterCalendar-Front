@@ -25,7 +25,6 @@ const RegisterPage = () => {
 
     const registerMutation = useMutation({
         mutationFn: createUserAccount,
-
     });
 
     const { login } = useUserContext();
@@ -40,7 +39,7 @@ const RegisterPage = () => {
                     setSubmitting(true);
                     try {
                         const user = await registerMutation.mutateAsync(values);
-                        login(user);
+                        await login(user);
                     } catch (error) {
 
                         if (error.statusCode === 400 && error.body) {
@@ -89,7 +88,7 @@ const RegisterPage = () => {
                             <ErrorMessage name="password_confirm" component="div" className='text-red-500' />
                         </div>
                         <Button className="bg-green-600 hover:bg-green-800" type="submit" disabled={isSubmitting}>
-                          {!isSubmitting ? 'Register' : <ButtonSpinner className="" />}
+                            {!isSubmitting ? 'Register' : <ButtonSpinner className="" />}
                         </Button>
                     </Form>
                 )}
